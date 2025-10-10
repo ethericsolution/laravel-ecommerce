@@ -45,9 +45,9 @@ Route::get('migrate-fresh', function () {
 })->name('migrate.refresh');
 
 
-Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest:admin');
+Route::get('/login',  [LoginController::class, 'index'])->name('login')->middleware('guest:admin');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post')->middleware('guest:admin');
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 

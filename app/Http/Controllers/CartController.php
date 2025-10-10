@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Notifications\AbandonedCartNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -12,7 +14,9 @@ class CartController extends Controller
     {
         $cart = cart();
 
-        return view('front.cart', compact('cart'));
+        $bestSellingProducts = Product::latest('view_count')->active()->with('media')->take(4)->get();
+
+        return view('front.cart', compact('cart', 'bestSellingProducts'));
     }
 
     public function addToCart(Request $request)
@@ -38,6 +42,10 @@ class CartController extends Controller
         $itemTotal = $cartItem->product->selling_price * $cartItem->quantity;
 
         applyTaxesToObject($cartItem, $itemTotal);
+
+        $user = $cart->user;
+
+        /* $user->notify(new AbandonedCartNotification($user)); */
 
         return redirect()->back()
             ->with('success', 'Product added to cart successfully!!!');

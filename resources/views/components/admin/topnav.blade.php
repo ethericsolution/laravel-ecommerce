@@ -57,7 +57,7 @@
                     <!-- Active: "bg-gray-50 outline-hidden", Not Active: "" -->
                     <a href="{{ route('admin.profile.edit') }}" class="block px-3 py-1 text-sm/6 text-gray-900"
                         role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
-                    <form action="{{ route('admin.logout') }}">
+                    <form action="{{ route('admin.logout') }}" method="post">
                         @csrf
                         <button type="submit"
                             class="block w-full text-left cursor-pointer px-3 py-1 text-sm/6 text-gray-900 hover:bg-gray-50 hover:outline-hidden"

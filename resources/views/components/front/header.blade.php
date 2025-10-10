@@ -28,16 +28,17 @@
                             loading="lazy" />
                     </a>
                 </div>
-                <div class="lg:max-w-80 lg:block hidden w-full" @click="openSearch = true">
+                <form action="{{ route('search.store') }}" method="POST" class="lg:max-w-80 lg:block hidden w-full">
+                    @csrf
                     <div class="relative group">
-                        <input type="text" x-ref="searchInput"
+                        <input type="text" name="query"
                             class="w-full h-11 pr-4 pl-12 rounded-xl border border-accent-200 bg-accent-50/30 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 focus:bg-white transition-all duration-300 placeholder:text-accent-400"
-                            placeholder="Search products..." role="combobox" aria-expanded="false"
-                            aria-controls="options" readonly>
+                            placeholder="Search products...">
+
                         <i data-lucide="search"
                             class="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-accent-400 group-hover:text-primary-400 transition-colors duration-300"></i>
                     </div>
-                </div>
+                </form>
                 <div class="lg:block hidden">
                     <div class="flex items-center gap-x-3">
                         <a href="{{ route('account.cart') }}"

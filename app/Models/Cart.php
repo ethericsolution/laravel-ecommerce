@@ -13,7 +13,7 @@ class Cart extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['user_id', 'session_id'];
+    protected $fillable = ['user_id', 'session_id', 'is_checked_out'];
 
     public function user(): BelongsTo
     {

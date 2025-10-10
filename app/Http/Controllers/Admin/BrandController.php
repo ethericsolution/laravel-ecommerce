@@ -40,20 +40,6 @@ class BrandController extends Controller
     public function store(BrandStoreRequest $request)
     {
 
-        $validated = $request->validate([
-            'name'              => ['required', 'string', 'unique:' . Brand::class],
-            'slug'              => ['required', 'string', 'unique:' . Brand::class],
-            'description'       => ['nullable', 'string'],
-            'is_active'         => ['boolean', 'default(true)'],
-            'featured-image'    => ['nullable', 'image', 'max:1024'],
-            'seo_title'         => ['nullable', 'string'],
-            'seo_description'   => ['nullable', 'string'],
-        ]);
-
-
-
-
-
         $brand = Brand::create($request->validated());
 
         if ($request->hasFile('featured-image')) {

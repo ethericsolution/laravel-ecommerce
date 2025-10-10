@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SubscriberController;
 use App\Jobs\Demo;
 use App\Mail\JobFailedMail;
@@ -39,6 +40,8 @@ Route::view('/about-us', 'front.about')->name('about');
 Route::view('/contact-us', 'front.contact')->name('contact');
 Route::post('/contact-us', [ContactQueryController::class, 'store'])->name('contactQueries.store');
 Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribers.store');
+
+Route::post('/search/store', [SearchController::class, 'store'])->name('search.store');
 
 /**
  * Policies

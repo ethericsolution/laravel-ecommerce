@@ -1,14 +1,12 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Blog;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\UnreachableUrl;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Blog\Category>
  */
 class CategoryFactory extends Factory
 {
@@ -30,21 +28,5 @@ class CategoryFactory extends Factory
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month', 'now'),
         ];
-    }
-
-    public function configure(): CategoryFactory
-    {
-        return $this->afterCreating(function (Category $category) {
-            try {
-                $category
-                    ->addMediaFromUrl('https://picsum.photos/480/320')
-                    ->usingName(Str::uuid())
-                    ->usingFileName(Str::uuid() . '.jpg')
-                    ->preservingOriginal()
-                    ->toMediaCollection();
-            } catch (UnreachableUrl $exception) {
-                return;
-            }
-        });
     }
 }

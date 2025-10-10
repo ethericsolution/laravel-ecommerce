@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\User\StoreRequest as UserStoreRequest;
+use App\Http\Requests\Admin\User\UpdateRequest as UserUpdateRequest;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,17 +37,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        $validated = $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name'  => ['nullable', 'string', 'max:255'],
-            'email'      => ['required', 'email', 'string', 'unique:users', 'max:255'],
-            'phone'      => ['required', 'string', 'max:20'],
-            'password'   => ['required'],
-        ]);
 
-        $user = User::create($validated);
+        $user = User::create($request->validated());
 
         return redirect()
             ->route('admin.users.index')
@@ -71,16 +66,19 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        $validated = $request->validate([
+        /*  $validated = $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name'  => ['nullable', 'string', 'max:255'],
             'email'      => ['required', 'email', 'string', 'unique:users,id,' . $user->id, 'max:255'],
             'phone'      => ['required', 'string', 'max:20'],
-        ]);
+        ]); */
 
-        $user->fill($validated);
+        $user->fill($request->validated());
+        if ($request->filled('password')) {
+            $user->password = $request->password;
+        }
         $user->save();
 
         return redirect()
