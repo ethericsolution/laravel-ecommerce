@@ -43,10 +43,6 @@ class CartController extends Controller
 
         applyTaxesToObject($cartItem, $itemTotal);
 
-        $user = $cart->user;
-
-        /* $user->notify(new AbandonedCartNotification($user)); */
-
         return redirect()->back()
             ->with('success', 'Product added to cart successfully!!!');
     }

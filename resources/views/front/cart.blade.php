@@ -23,7 +23,7 @@
                                 alt="">
                         </div>
                         <div class="text-center flex justify-center">
-                            <a href="{{ route('home') }}" type="submit" class="btn-primary !px-6">Countinue Shopping</a>
+                            <a href="{{ route('home') }}" type="submit" class="btn-primary !px-6">Continue Shopping</a>
                         </div>
                     </div>
                 @else
@@ -97,8 +97,8 @@
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="5" class="text-center">No Products in Cart
-                                                                !!!
+                                                            <td colspan="5" class="text-center">
+                                                                {{ __('No Products in Cart!!!') }}
                                                             </td>
                                                         </tr>
                                                     @endforelse
@@ -113,7 +113,6 @@
                                             <div>
                                                 <span class="sr-only">For Coupon Apply</span>
                                             </div>
-                                            {{-- Update cart --}}
                                             <button type="submit" class="btn-primary !px-6">Update Cart</button>
                                         </div>
                                     </div>

@@ -23,7 +23,6 @@ class SearchController extends Controller
             return redirect()->route('products.index');
         }
 
-
         $searchQuery = SearchQuery::firstOrCreate(
             ['query' => $request->get('query')],
         );
@@ -31,14 +30,13 @@ class SearchController extends Controller
         $searchQuery->increment('count');
 
         if (Auth::check()) {
-
             $userSearch = UserSearchQuery::firstOrCreate(
                 [
                     'user_id' => Auth::id(),
                     'search_query_id' => $searchQuery->id
                 ],
-
             );
+
             $userSearch->increment('count');
         }
 
