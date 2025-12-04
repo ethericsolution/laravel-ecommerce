@@ -9,7 +9,7 @@
     @include('components.common.breadcrumb', $breadcrumbs)
 
     <!-- Forget Password Form Start -->
-    <div class="bg-base-100 py-8 sm:py-16 lg:py-24">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="card shadow-none border max-w-xl mx-auto">
 

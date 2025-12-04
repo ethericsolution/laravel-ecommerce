@@ -20,7 +20,7 @@
     @include('components.common.breadcrumb', $breadcrumbs)
 
     <!-- product details section start -->
-    <div class="bg-base-100 py-8 sm:py-16 lg:py-24">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
             <div class="md:grid md:grid-cols-2 md:gap-10 xl:gap-24">
@@ -160,11 +160,11 @@
     </div>
     <!-- product details section end -->
 
-    <div class="bg-base-100 py-8 sm:py-16 lg:py-24">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
             data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "lg": 4 }, "isInfiniteLoop": true }'>
             <div
-                class="mb-12 space-y-4 md:mb-16 lg:mb-24 flex flex-col md:flex-row justify-between items-start md:items-center">
+                class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
                 <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Related Products
                 </h2>
                 <div class="flex gap-4">

@@ -44,12 +44,12 @@
 
     @if ($brands->count() > 0)
         <!-- Brand showcase section start -->
-        <div class="bg-base-200 py-8 sm:py-16 lg:py-24">
+        <div class="bg-base-200 py-6 sm:py-10 lg:py-14">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
                 data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "lg": 4 }, "isInfiniteLoop": true }'>
 
                 <div
-                    class="mb-12 space-y-4 md:mb-16 lg:mb-24 flex flex-col md:flex-row justify-between items-start md:items-center">
+                    class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
                     <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Popular Brands
                     </h2>
                     <div class="flex gap-4">
@@ -87,10 +87,10 @@
     @endif
 
     <!-- feature products section start -->
-    <div class="bg-base-100 py-8 sm:py-16 lg:py-24">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Product Header -->
-            <div class="mb-12 space-y-4 md:mb-16 lg:mb-24">
+            <div class="mb-6 space-y-4 md:mb-8 lg:mb-10">
                 <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Featured Products</h2>
             </div>
 
@@ -102,10 +102,10 @@
     <!-- feature products section end -->
 
     <!-- top categories product section start -->
-    <div class="bg-base-200 py-8 sm:py-16 lg:py-24">
+    <div class="bg-base-200 py-6 sm:py-10 lg:py-14">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Header section -->
-            <div class="mb-12 space-y-4 text-center sm:mb-16 lg:mb-24">
+            <div class="mb-6 space-y-4 text-center sm:mb-8 lg:mb-10">
                 <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Popular Categories</h2>
             </div>
 
@@ -119,10 +119,10 @@
 
 
     <!-- Our Product section start  -->
-    <div class="bg-base-100 py-8 sm:py-16 lg:py-24">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Product Header -->
-            <div class="mb-12 space-y-4 md:mb-16 lg:mb-24">
+            <div class="mb-6 space-y-4 md:mb-8 lg:mb-10">
                 <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Our Products</h2>
             </div>
 
@@ -134,8 +134,8 @@
     <!-- Our Product section end  -->
 
     <!-- Testimonials section start -->
-    <div class="bg-base-200 py-8 sm:py-16 lg:py-24">
-        <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+    <div class="bg-base-200 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div id="multi-slide" data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "md": 2 } }'
                 class="relative flex w-full gap-12 max-lg:flex-col md:gap-16 lg:items-center lg:gap-24">
                 <div>
@@ -191,11 +191,11 @@
     <!-- Testimonials section end -->
 
     <!-- recent products section start -->
-    <div class="bg-base-100 py-8 sm:py-16 lg:py-24">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
             data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "lg": 4 }, "isInfiniteLoop": true }'>
             <div
-                class="mb-12 space-y-4 md:mb-16 lg:mb-24 flex flex-col md:flex-row justify-between items-start md:items-center">
+                class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
                 <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Recently Added
                 </h2>
                 <div class="flex gap-4">

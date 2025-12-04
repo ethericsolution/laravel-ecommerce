@@ -12,7 +12,7 @@
 
     @include('components.common.breadcrumb', $breadcrumbs)
 
-    <div class="bg-base-100 py-8 sm:py-16 lg:py-24">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="my-10 lg:grid lg:grid-cols-12 gap-6">
                 @if ($cart->items->isEmpty())
@@ -159,11 +159,11 @@
         </div>
     </div>
 
-    <div class="bg-base-100 py-8 sm:py-16 lg:py-24">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Product Header -->
             <div
-                class="mb-12 space-y-4 md:mb-16 lg:mb-24 flex flex-col md:flex-row justify-between items-start md:items-center">
+                class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
                 <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Best Selling
                     Products</h2>
                 <a href="{{ route('products.index') }}" class="btn btn-outline btn-primary">
