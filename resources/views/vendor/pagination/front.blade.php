@@ -1,32 +1,29 @@
 @if ($paginator->hasPages())
     <div class="flex items-center justify-center pb-10">
-        <div>
-            <nav class="isolate inline-flex -space-x-px rounded-md shadow-xs gap-2" aria-label="Pagination">
-                {{-- Previous Page Link --}}
-                @if ($paginator->onFirstPage())
-                    <span aria-disabled="true" aria-label="{{ __('pagination.previous') }}">
-                        <span
-                            class="relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                            aria-hidden="true">
-                            <i data-lucide="chevron-left" class="size-5"></i>
-                        </span>
+        <nav class="flex items-center gap-x-2" aria-label="Pagination">
+            {{-- Previous --}}
+            @if ($paginator->onFirstPage())
+                <span aria-disabled="true" aria-label="{{ __('pagination.previous') }}">
+                    <span class="btn btn-soft disabled" aria-hidden="true">
+                        <span class="icon-[tabler--chevron-left] size-5 rtl:rotate-180" aria-hidden="true"></span>
+                        <span class="hidden sm:inline ml-2">Previous</span>
                     </span>
-                @else
-                    <a href="{{ $paginator->previousPageUrl() }}" rel="prev"
-                        class="relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-primary-200 hover:ring-primary-600 hover:text-primary-600 focus:z-20 focus:outline-offset-0"
-                        aria-label="{{ __('pagination.previous') }}">
-                        <span class="sr-only">Previous</span>
-                        <i data-lucide="chevron-left" class="size-5"></i>
-                    </a>
-                @endif
+                </span>
+            @else
+                <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="btn btn-soft"
+                    aria-label="{{ __('pagination.previous') }}">
+                    <span class="icon-[tabler--chevron-left] size-5 rtl:rotate-180" aria-hidden="true"></span>
+                    <span class="hidden sm:inline ml-2">Previous</span>
+                </a>
+            @endif
 
-                {{-- Pagination Elements --}}
+            {{-- Page buttons --}}
+            <div class="flex items-center gap-x-2">
                 @foreach ($elements as $element)
-                    {{-- "Three Dots" Separator --}}
+                    {{-- "Three Dots" separator --}}
                     @if (is_string($element))
                         <span aria-disabled="true">
-                            <span
-                                class="relative inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-primary-600 ring-1 ring-gray-300 ring-inset focus:outline-offset-0">{{ $element }}</span>
+                            <span class="btn btn-soft px-4 py-2">{{ $element }}</span>
                         </span>
                     @endif
 
@@ -35,12 +32,13 @@
                         @foreach ($element as $page => $url)
                             @if ($page == $paginator->currentPage())
                                 <span aria-current="page">
-                                    <span
-                                        class="relative z-10 inline-flex items-center bg-primary-200 rounded-md px-4 py-2 text-sm font-semibold text-primary-600 ring-1 ring-primary-600 focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">{{ $page }}</span>
+                                    <span class="btn btn-soft btn-square text-bg-soft-primary bg-soft-primary"
+                                        aria-hidden="true">
+                                        {{ $page }}
+                                    </span>
                                 </span>
                             @else
-                                <a href="{{ $url }}"
-                                    class="relative inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-primary-200 hover:text-primary-600 hover:ring-primary-600 focus:z-20 focus:outline-offset-0"
+                                <a href="{{ $url }}" class="btn btn-soft btn-square"
                                     aria-label="{{ __('Go to page :page', ['page' => $page]) }}">
                                     {{ $page }}
                                 </a>
@@ -48,25 +46,23 @@
                         @endforeach
                     @endif
                 @endforeach
+            </div>
 
-                {{-- Next Page Link --}}
-                @if ($paginator->hasMorePages())
-                    <a href="{{ $paginator->nextPageUrl() }}" rel="next"
-                        class="relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-primary-200 hover:ring-primary-600 hover:text-primary-600 focus:z-20 focus:outline-offset-0"
-                        aria-label="{{ __('pagination.next') }}">
-                        <i data-lucide="chevron-right" class="size-5"></i>
-                    </a>
-                @else
-                    <span aria-disabled="true" aria-label="{{ __('pagination.next') }}">
-                        <span
-                            class="relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                            aria-hidden="true">
-                            <span class="sr-only">Next</span>
-                            <i data-lucide="chevron-right" class="size-5"></i>
-                        </span>
+            {{-- Next --}}
+            @if ($paginator->hasMorePages())
+                <a href="{{ $paginator->nextPageUrl() }}" rel="next" class="btn btn-soft"
+                    aria-label="{{ __('pagination.next') }}">
+                    <span class="hidden sm:inline mr-2">Next</span>
+                    <span class="icon-[tabler--chevron-right] size-5 rtl:rotate-180" aria-hidden="true"></span>
+                </a>
+            @else
+                <span aria-disabled="true" aria-label="{{ __('pagination.next') }}">
+                    <span class="btn btn-soft disabled" aria-hidden="true">
+                        <span class="hidden sm:inline mr-2">Next</span>
+                        <span class="icon-[tabler--chevron-right] size-5 rtl:rotate-180" aria-hidden="true"></span>
                     </span>
-                @endif
-            </nav>
-        </div>
+                </span>
+            @endif
+        </nav>
     </div>
 @endif

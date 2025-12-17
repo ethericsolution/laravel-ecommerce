@@ -2,7 +2,8 @@
     onsubmit="return confirm('Are you sure want to delete?')">
     @csrf
     @method('DELETE')
-    <button class="link-danger relative inline-flex cursor-pointer">
-        <i data-lucide="trash-2" class="size-5"></i>
+
+    <button class="btn btn-circle btn-text btn-sm" aria-label="Delete Action">
+        <span class="icon-[tabler--trash] size-5"></span>
     </button>
 </form>

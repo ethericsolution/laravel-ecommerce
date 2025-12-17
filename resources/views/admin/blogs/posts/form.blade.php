@@ -1,5 +1,5 @@
 <x-layouts.admin>
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto space-y-6">
 
         @php
             $breadcrumbLinks = [
@@ -30,19 +30,19 @@
             @endisset
 
             <div class="grid grid-cols-12 gap-6">
-                <div class="col-span-12 lg:col-span-8">
-                    <div class="mt-6 rounded-xl bg-white shadow-sm">
-                        <div class="p-6" x-data="{
+                <div class="col-span-12 lg:col-span-8 space-y-6">
+                    <div class="card">
+                        <div class="card-body" x-data="{
                             title: '{{ addslashes(old('title', $blog_post->title)) }}',
                             slug: '{{ old('slug', $blog_post->slug) }}'
                         }">
-                            <div class="space-y-2">
-                                <label for="title" class="control-label">Title</label>
+                            <div class="space-y-1">
+                                <label for="title" class="label-text">Title</label>
                                 <input type="text" name="title" id="title"
-                                    class="form-control @error('title') is-invalid @enderror" x-model="title"
+                                    class="input @error('title') is-invalid @enderror" x-model="title"
                                     @input="slug = slugify(title)" />
                                 @error('title')
-                                    <p class="text-sm text-red-600">{{ $message }}</p>
+                                    <span class="helper-text">{{ $message }}</span>
                                 @enderror
 
                                 <p class="text-sm text-gray-600">
@@ -59,29 +59,29 @@
                         <x-forms.rich-text-editor name="content">{!! old('content', $blog_post->content) !!}</x-forms.rich-text-editor>
                     </div>
 
-                    <div class="mt-6 rounded-xl bg-white shadow-sm">
-                        <div class="p-6 border-b border-gray-200">
-                            <h3 class="text-base font-semibold text-gray-800">SEO</h3>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="text-base-content text-lg font-medium">SEO</h3>
                         </div>
-                        <div class="p-6">
+                        <div class="card-body">
                             <div class="grid gap-4">
-                                <div class="space-y-2">
-                                    <label for="seo_title" class="control-label">SEO Title</label>
+                                <div class="space-y-1">
+                                    <label for="seo_title" class="label-text">SEO Title</label>
                                     <input type="text" name="seo_title" id="seo_title"
-                                        class="form-control @error('seo_title') is-invalid @enderror"
+                                        class="input @error('seo_title') is-invalid @enderror"
                                         value="{{ old('seo_title', $blog_post->seo_title) }}" />
                                     @error('seo_title')
-                                        <p class="text-sm text-red-600">{{ $message }}</p>
+                                        <span class="helper-text">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="space-y-2">
-                                    <label for="seo_description" class="control-label">SEO
+                                <div class="space-y-1">
+                                    <label for="seo_description" class="label-text">SEO
                                         Description</label>
-                                    <textarea class="form-control @error('seo_description') is-invalid @enderror" id="seo_description"
-                                        name="seo_description" rows="3">{{ old('seo_description', $blog_post->seo_description) }}</textarea>
+                                    <textarea class="textarea @error('seo_description') is-invalid @enderror" id="seo_description" name="seo_description"
+                                        rows="3">{{ old('seo_description', $blog_post->seo_description) }}</textarea>
                                     @error('seo_description')
-                                        <p class="text-sm text-red-600">{{ $message }}</p>
+                                        <span class="helper-text">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -89,14 +89,13 @@
                     </div>
                 </div>
 
-                <div class="col-span-12 lg:col-span-4">
-                    <div class="mt-6 rounded-xl bg-white shadow-sm">
-                        <div class="p-6 border-b border-gray-200">
-                            <h3 class="text-base font-semibold text-gray-800">Status</h3>
+                <div class="col-span-12 lg:col-span-4 space-y-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="text-base-content text-lg font-medium">Status</h3>
                         </div>
-                        <div class="p-6">
-                            <select name="status" id="status"
-                                class="form-select @error('status') is-invalid @enderror">
+                        <div class="card-body">
+                            <select name="status" id="status" class="select @error('status') is-invalid @enderror">
                                 <option value="published" @selected(old('status', $blog_post->published) == 'published')>
                                     Published
                                 </option>
@@ -106,105 +105,70 @@
                             </select>
                         </div>
                     </div>
-                    <div class="mt-6 rounded-xl bg-white shadow-sm">
-                        <div class="p-6 border-b border-gray-200">
-                            <h3 class="text-base font-semibold text-gray-800">Associations</h3>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="text-base-content text-lg font-medium">Associations</h3>
                         </div>
-                        <div class="p-6">
+                        <div class="card-body">
                             <div class="space-y-4">
 
-                                <div class="space-y-2">
-                                    <label for="category_combobox" class="control-label">Category</label>
-                                    <div class="relative" x-data="categoryCombobox()">
-                                        <input x-model="query" @input="searchCategories" @focus="open = !open"
-                                            @keydown.arrow-down.prevent="highlightNext()"
-                                            @keydown.arrow-up.prevent="highlightPrev()"
-                                            @keydown.enter.prevent="selectHighlighted()" id="category_combobox"
-                                            type="text" name="category_name"
-                                            class="form-control @error('blog_category_id') is-invalid @enderror"
-                                            role="combobox" :aria-expanded="open" autocomplete="off">
-                                        <input type="hidden" name="blog_category_id" id="blog_category_id"
-                                            x-model="selectedId" />
-                                        <button type="button"
-                                            class="absolute inset-y-0 right-0 flex items-center rounded-r-lg px-2 focus:outline-hidden"
-                                            @click="open = !open">
-                                            <i data-lucide="chevrons-up-down" class="size-5 text-gray-400"></i>
-                                        </button>
-
-                                        <ul class="absolute z-100 mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-hidden sm:text-sm"
-                                            role="listbox" x-show="open && results.length" @click.away="open = !open">
-                                            <template x-for="(item, i) in results" :key="item.id">
-                                                <li class="relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none"
-                                                    id="option-0" role="option" tabindex="-1"
-                                                    :class="{
-                                                        'text-white bg-primary-600 outline-hidden': selectedId == item
-                                                            .id,
-                                                        'text-white bg-primary-600 outline-hidden': highlighted == i,
-                                                    }"
-                                                    @click="selectCategory(item)" @mouseenter="highlighted = i">
-                                                    <span class="block truncate"
-                                                        :class="{
-                                                            'font-semibold': selectedId == item.id
-                                                        }"
-                                                        x-text="item.name"></span>
-                                                </li>
-                                            </template>
-                                        </ul>
-                                    </div>
+                                <div class="space-y-1">
+                                    <label for="blog_category_id" class="label-text">Category</label>
+                                    <select id="blog_category_id" name="blog_category_id" @class(['select', 'is-invalid' => $errors->has('blog_category_id')])
+                                        data-select='{
+                                            "placeholder": "Select",
+                                            "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+                                            "toggleClasses": "advance-select-toggle select-disabled:pointer-events-none select-disabled:opacity-40",
+                                            "hasSearch": true,
+                                            "dropdownClasses": "advance-select-menu max-h-52 pt-0 overflow-y-auto",
+                                            "optionClasses": "advance-select-option selected:select-active",
+                                            "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"icon-[tabler--check] shrink-0 size-4 text-primary hidden selected:block \"></span></div>",
+                                            "extraMarkup": "<span class=\"icon-[tabler--chevron-down] shrink-0 size-4 text-base-content absolute top-1/2 end-3 -translate-y-1/2 \"></span>"
+                                            }'>
+                                        <option value="">{{ __('Select Category') }}</option>
+                                        @foreach ($blog_categories as $key => $category)
+                                            <option value="{{ $key }}" @selected(old('blog_category_id', $blog_post->blog_category_id) == $key)>
+                                                {{ $category }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                     @error('blog_category_id')
-                                        <p class="text-sm text-red-600">{{ $message }}</p>
+                                        <span class="helper-text">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="space-y-2">
-                                    <label for="published_at" class="control-label">Published At</label>
+                                <div class="space-y-1">
+                                    <label for="published_at" class="label-text">Published At</label>
                                     <input type="date" name="published_at" id="published_at"
-                                        class="form-control @error('published_at') is-invalid @enderror"
+                                        class="input @error('published_at') is-invalid @enderror"
                                         value="{{ old('published_at', $blog_post->published_at?->format('Y-m-d') ?? now()->format('Y-m-d')) }}" />
                                     @error('published_at')
-                                        <p class="text-sm text-red-600">{{ $message }}</p>
+                                        <span class="helper-text">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-6 rounded-xl bg-white shadow-sm">
-                        <div class="p-6 border-b border-gray-200">
-                            <h3 class="text-base font-semibold text-gray-800">Featured Image</h3>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="text-base-content text-lg font-medium">Featured Image</h3>
                         </div>
-                        <div class="p-6">
-                            <div class="space-y-2">
-                                <div
-                                    class="flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                                    <div class="text-center">
-                                        <i data-lucide="image" class="mx-auto size-12 text-gray-300"></i>
-                                        <div class="mt-4 flex text-sm/6 text-gray-600">
-                                            <label for="image"
-                                                class="relative cursor-pointer rounded-md bg-white font-semibold text-primary-600 focus-within:ring-2 focus-within:ring-primary-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-primary-500">
-                                                <span>Upload Featured Image</span>
-                                                <input id="image" name="image" type="file"
-                                                    class="sr-only" />
-                                            </label>
-                                            <p class="pl-1">or drag and drop</p>
-                                        </div>
-                                        <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 2MB</p>
-                                    </div>
-                                </div>
+                        <div class="card-body">
+                            <div class="space-y-1">
+                                <input id="image" name="image" type="file" @class(['input', 'is-invalid' => $errors->has('blog_category_id')]) />
                                 @error('image')
-                                    <p class="text-sm text-red-600">{{ $message }}</p>
+                                    <span class="helper-text">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
             </div>
             <div class="mt-6 space-x-2">
-                <button type="submit" class="btn-primary">Submit</button>
-                <a href="{{ route('admin.blogs.posts.index') }}" class="btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ route('admin.blogs.posts.index') }}" class="btn btn-soft">Cancel</a>
             </div>
         </form>
 
@@ -218,48 +182,6 @@
                 .replace(/[^a-z0-9\s-]/g, '')
                 .replace(/\s+/g, '-')
                 .replace(/-+/g, '-');
-        }
-
-
-        function categoryCombobox() {
-            return {
-                open: false,
-                query: "{{ old('category_name', $blog_post->blogCategory->name ?? '') }}",
-                results: [],
-                highlighted: -1,
-                selectedId: "{{ old('blog_category_id', $blog_post->blog_category_id) }}",
-                searchCategories() {
-                    if (this.query.length < 1) {
-                        this.results = [];
-                        return;
-                    }
-                    fetch(`{{ route('admin.blogs.categories.search') }}?q=${encodeURIComponent(this.query)}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            this.results = data;
-                            this.highlighted = -1;
-                            this.selectedId = "";
-                        });
-                },
-                highlightNext() {
-                    if (this.results.length === 0) return;
-                    this.highlighted = (this.highlighted + 1) % this.results.length;
-                },
-                highlightPrev() {
-                    if (this.results.length === 0) return;
-                    this.highlighted = (this.highlighted - 1 + this.results.length) % this.results.length;
-                },
-                selectHighlighted() {
-                    if (this.highlighted >= 0 && this.results[this.highlighted]) {
-                        this.selectCategory(this.results[this.highlighted]);
-                    }
-                },
-                selectCategory(item) {
-                    this.query = item.name;
-                    this.selectedId = item.id;
-                    this.open = false;
-                }
-            }
         }
     </script>
 </x-layouts.admin>

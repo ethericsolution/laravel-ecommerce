@@ -123,4 +123,5 @@ This project is open-sourced software licensed under the [MIT license](https://o
 - [Tailwind CSS](https://tailwindcss.com) - For styling
 - [Alpine.js](https://alpinejs.dev) - For frontend interactivity
 - [Spatie Media Library](https://spatie.be/docs/laravel-medialibrary) - For image management
+- - [FlyonUI](https://flyonui.com) - UI used for the frontend
 

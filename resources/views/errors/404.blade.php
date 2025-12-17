@@ -1,6 +1,6 @@
 <x-layouts.front>
     <!-- 404 Start -->
-    <div class="container py-[150px]">
+    <div class="mx-auto max-w-7xl py-[150px]">
         <div class="text-center">
             <h2 class="text-9xl leading-tight font-bold text-primary-500">404</h2>
             <p class="text-3xl leading-tight font-bold text-primary-500 pb-5 capitalize">

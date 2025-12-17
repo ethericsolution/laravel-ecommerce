@@ -1,83 +1,50 @@
-<x-layouts.front>
-    @inject('settings', 'App\Settings\GeneralSetting')
-    @php
-        $breadcrumbs = [
-            'links' => [
-                ['url' => route('home'), 'text' => 'Home'],
-                ['url' => route('account.dashboard'), 'text' => 'Your Account'],
-                ['url' => '#', 'text' => 'Your Orders'],
-            ],
-            'title' => 'Your Orders',
-        ];
-    @endphp
+<div class="card">
+    <div class="overflow-x-auto">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">Order #</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col" width="40%">Products</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col" class="text-right">Order Total</th>
+                    <th scope="col" class="text-right">
+                        <span class="sr-only">Action</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($orders as $order)
+                    <tr>
+                        <td class="!font-semibold">
+                            <a class="link link-animated link-primary"
+                                href="{{ route('account.orders.show', $order) }}">{{ $order->order_number }}</a>
+                        </td>
 
-    @include('components.common.breadcrumb', $breadcrumbs)
+                        <td>
+                            {{ $order->order_date->format(setting('general.date_format')) }}
+                        </td>
 
-    <section class="xl:pb-20 pb-8 md:pb-12">
-        <div class="container lg:flex px-3 md:px-5 xl:px-0 gap-6">
-
-            <x-account.nav />
-
-            <div class="w-full">
-                <div class="my-10 overflow-hidden rounded-xl bg-white shadow-xs border border-gray-200">
-                    <div class="p-6 border-b border-gray-200">
-                        <h3 class="text-xl/6 font-semibold text-gray-800">Your Orders</h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="-mx-6 -my-6 overflow-x-auto">
-                            <div class="inline-block min-w-full align-middle">
-                                <table class="record-table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Order #</th>
-                                            <th scope="col">Order Date</th>
-                                            <th scope="col" width="40%">Products</th>
-                                            <th scope="col" class="!text-center">Status</th>
-                                            <th scope="col" class="!text-right">Order Total</th>
-                                            <th scope="col" class="!text-right">
-                                                <span class="sr-only">Action</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($orders as $order)
-                                            <tr>
-                                                <td class="!font-semibold">
-                                                    <a class="link-primary"
-                                                        href="{{ route('account.orders.show', $order) }}">{{ $order->order_number }}</a>
-                                                </td>
-
-                                                <td>
-                                                    {{ $order->order_date->format(setting('general.date_format')) }}
-                                                </td>
-
-                                                <td class="!whitespace-normal !break-words">
-                                                    {{ $order->items->pluck('product.name')->implode(', ') }}
-                                                </td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="inline-flex items-center rounded-md bg-{{ $order->status->color() }}-50 px-2 py-1 text-xs font-medium text-{{ $order->status->color() }}-600 ring-1 ring-{{ $order->status->color() }}-500/10 ring-inset">{{ $order->status->label() }}</span>
-                                                </td>
-                                                <td class="text-right">@money($order->grand_total)</td>
-                                                <td class="text-right">
-                                                    <a class="btn-primary !p-2 !text-sm"
-                                                        href="{{ route('account.orders.show', $order) }}">View
-                                                        Order</a>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="6" class="text-center">No Orders Found !!!</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-</x-layouts.front>
+                        <td class="!whitespace-normal !break-words">
+                            {{ $order->items->pluck('product.name')->implode(', ') }}
+                        </td>
+                        <td class="text-center">
+                            <span
+                                class=" badge badge-soft badge-{{ $order->status->color() }}">{{ $order->status->label() }}</span>
+                        </td>
+                        <td class="text-right">@money($order->grand_total)</td>
+                        <td class="text-right">
+                            <a class="btn btn-sm btn-outline btn-primary"
+                                href="{{ route('account.orders.show', $order) }}">View
+                                Order</a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center">No Orders Found !!!</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>

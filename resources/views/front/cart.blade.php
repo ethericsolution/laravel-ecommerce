@@ -12,8 +12,8 @@
 
     @include('components.common.breadcrumb', $breadcrumbs)
 
-    <section class="xl:pb-20 pb-8 md:pb-12">
-        <div class="container px-3 md:px-5 xl:px-0">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="my-10 lg:grid lg:grid-cols-12 gap-6">
                 @if ($cart->items->isEmpty())
                     <div class="lg:col-span-12">
@@ -23,7 +23,8 @@
                                 alt="">
                         </div>
                         <div class="text-center flex justify-center">
-                            <a href="{{ route('home') }}" type="submit" class="btn-primary !px-6">Continue Shopping</a>
+                            <a href="{{ route('home') }}" type="submit" class="btn-primary !px-6">Continue
+                                Shopping</a>
                         </div>
                     </div>
                 @else
@@ -32,7 +33,7 @@
                             @csrf
                             <div class="overflow-hidden rounded-xl bg-white shadow-xs border border-gray-200">
                                 <div class="p-6 border-b border-gray-200">
-                                    <h3 class="text-xl/6 font-semibold text-gray-800">Your Cart</h3>
+                                    <h3 class="text-base-content text-lg font-medium">Your Cart</h3>
                                 </div>
                                 <div class="p-6">
                                     <div class="-mx-6 -my-6 overflow-x-auto">
@@ -113,7 +114,8 @@
                                             <div>
                                                 <span class="sr-only">For Coupon Apply</span>
                                             </div>
-                                            <button type="submit" class="btn-primary !px-6">Update Cart</button>
+                                            <button type="submit" class="btn-primary !px-6">Update
+                                                Cart</button>
                                         </div>
                                     </div>
                                 @endif
@@ -123,7 +125,7 @@
                     <div class="lg:col-span-4 mt-6 lg:mt-0">
                         <div class="overflow-hidden rounded-xl bg-white shadow-xs border border-gray-200">
                             <div class="p-6 border-b border-gray-200">
-                                <h3 class="text-xl/6 font-semibold text-gray-800">Cart Summary</h3>
+                                <h3 class="text-base-content text-lg font-medium">Cart Summary</h3>
                             </div>
                             @php
                                 // $breakdown = getCartTaxBreakdown($cart);
@@ -137,7 +139,8 @@
                                     @foreach ($cart->tax_breakdown as $tax)
                                         <div class="flex items-center justify-between">
                                             <dt class="text-base/6 text-gray-600">{{ $tax['name'] }}</dt>
-                                            <dd class="text-base/6 font-medium text-gray-900">@money($tax['total_amount'])</dd>
+                                            <dd class="text-base/6 font-medium text-gray-900">@money($tax['total_amount'])
+                                            </dd>
                                         </div>
                                     @endforeach
                                     <div class="flex items-center justify-between">
@@ -154,26 +157,25 @@
                 @endif
             </div>
         </div>
-    </section>
+    </div>
 
-    <section class="xl:pb-20 pb-8 md:pb-12">
-        <div class="container px-3 md:px-5 xl:px-0">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-4">
-                <div>
-                    <h2 class="text-accent-900 text-3xl md:text-4xl xl:text-5xl font-bold mb-3">
-                        Our <span class="text-gradient">Best Selling Products</span>
-                    </h2>
-                </div>
-                <a href="{{ route('products.index') }}" class="btn-secondary text-sm gap-2">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Product Header -->
+            <div
+                class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+                <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Best Selling
+                    Products</h2>
+                <a href="{{ route('products.index') }}" class="btn btn-outline btn-primary">
                     <span>View All</span>
-                    <i data-lucide="arrow-right" class="size-4"></i>
+                    <span class="icon-[tabler--arrow-right] size-5"></span>
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
                 @each('components.products.card', $bestSellingProducts, 'product')
             </div>
         </div>
-    </section>
+    </div>
 
 </x-layouts.front>

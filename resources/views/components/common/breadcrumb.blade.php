@@ -1,20 +1,21 @@
 <!-- resources/views/components/breadcrumb.blade.php -->
 
 <div class="bg-gray-100 pt-3 pb-2 mx-auto">
-    <div class="container px-3 md:px-5 xl:px-0">
-        <div class="flex items-center gap-1 py-1">
-            @foreach ($links as $link)
-                @if ($loop->first)
-                    <a href="{{ $link['url'] }}" class="font-medium leading-tight text-gray-600">{{ $link['text'] }}</a>
-                @elseif($loop->last)
-                    <i data-lucide="chevron-right" class="size-5 text-gray-400"></i>
-                    <span class="font-medium leading-tight text-gray-800 inline-block">{{ $link['text'] }}</span>
-                @else
-                    <i data-lucide="chevron-right" class="size-5 text-gray-200"></i>
-                    <a href="{{ $link['url'] }}"
-                        class="font-medium leading-tight text-gray-600 inline-block">{{ $link['text'] }}</a>
-                @endif
-            @endforeach
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="breadcrumbs">
+            <ul>
+                @foreach ($links as $link)
+                    @if ($loop->last)
+                        <li aria-current="page">{{ $link['text'] }}</li>
+                    @else
+                        <li>
+                            <a href="{{ $link['url'] }}">{{ $link['text'] }}</a>
+                        </li>
+                        <li class="breadcrumbs-separator rtl:-rotate-[40deg]">/</li>
+                    @endif
+                @endforeach
+            </ul>
         </div>
 
         {{-- <h1 class="text-2xl lg:text-4xl font-semibold text-gray-800">{{ $title }}</h1> --}}

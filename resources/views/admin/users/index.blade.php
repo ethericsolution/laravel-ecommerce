@@ -1,6 +1,5 @@
 <x-layouts.admin>
-
-    <div class="mx-auto">
+    <div class="max-w-7xl mx-auto space-y-6">
         @php
             $breadcrumbLinks = [
                 [
@@ -19,53 +18,51 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks title="Users" :addNewAction="route('admin.users.create')" />
 
-        <div class="mt-8 flow-root">
-            <x-admin.table.search />
+        <x-admin.table.search />
 
-            {{-- Users Table --}}
-            <div class="overflow-hidden rounded-xl bg-white border border-gray-200">
-                <div class="p-6">
-                    <div class="-mx-6 -my-6 overflow-x-auto">
-                        <div class="inline-block min-w-full align-middle">
-                            <table class="record-table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Phone</th>
+        {{-- Users Table --}}
+        <div class="card">
+            <div class="overflow-x-auto">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
 
-                                        <th scope="col" class="relative">
-                                            <span class="sr-only">Actions</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($users as $user)
-                                        <tr>
-                                            <td class="!font-semibold">{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->phone }}</td>
+                            <th scope="col" class="relative">
+                                <span class="sr-only">Actions</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($users as $user)
+                            <tr>
+                                <td class="font-semibold">{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->phone }}</td>
 
-                                            {{-- Actions --}}
+                                {{-- Actions --}}
 
-                                            <td class="relative text-right text-sm space-x-1 items-center">
-                                                <x-admin.links.edit :href="route('admin.users.edit', $user)" />
+                                <td class="space-x-1 text-right">
+                                    <x-admin.links.edit :href="route('admin.users.edit', $user)" />
 
-                                                <x-admin.links.delete :action="route('admin.users.destroy', $user)" />
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="4" class="text-center">No Records found</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                                    <x-admin.links.delete :action="route('admin.users.destroy', $user)" />
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center">No Records found</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
-            {!! $users->links() !!}
+            @if ($users->hasPages())
+                <div class="card-footer border-t border-gray-200 p-4">
+                    {!! $users->links() !!}
+                </div>
+            @endif
         </div>
     </div>
 </x-layouts.admin>

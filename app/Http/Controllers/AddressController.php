@@ -18,7 +18,20 @@ class AddressController extends Controller
     {
         $addresses = auth()->user()->addresses;
 
-        return view('addresses.index', compact('addresses'));
+        $rightSideView = 'addresses.index';
+
+        $pageTitle = 'Your Addresses';
+
+        $breadcrumbs = [
+            'links' => [
+                ['url' => route('home'), 'text' => 'Home'],
+                ['url' => route('account.dashboard'), 'text' => 'Your Account'],
+                ['url' => '#', 'text' => $pageTitle]
+            ],
+            'title' => $pageTitle,
+        ];
+
+        return view('account.index', compact('rightSideView', 'pageTitle', 'breadcrumbs', 'addresses'));
     }
 
     /**
@@ -31,7 +44,21 @@ class AddressController extends Controller
         $countries = Country::all('id', 'name')
             ->pluck('name', 'id');
 
-        return view('addresses.form', compact('address', 'countries'));
+        $rightSideView = 'addresses.form';
+
+        $pageTitle = 'Add new Address';
+
+        $breadcrumbs = [
+            'links' => [
+                ['url' => route('home'), 'text' => 'Home'],
+                ['url' => route('account.dashboard'), 'text' => 'Your Account'],
+                ['url' => route('account.addresses.index'), 'text' => 'Your Addresses'],
+                ['url' => '#', 'text' => $pageTitle]
+            ],
+            'title' => $pageTitle,
+        ];
+
+        return view('account.index', compact('rightSideView', 'pageTitle', 'breadcrumbs', 'address', 'countries'));
     }
 
     /**
@@ -74,7 +101,21 @@ class AddressController extends Controller
         $countries = Country::all('id', 'name')
             ->pluck('name', 'id');
 
-        return view('addresses.form', compact('address', 'countries'));
+        $rightSideView = 'addresses.form';
+
+        $pageTitle = "Edit {$address->name}";
+
+        $breadcrumbs = [
+            'links' => [
+                ['url' => route('home'), 'text' => 'Home'],
+                ['url' => route('account.dashboard'), 'text' => 'Your Account'],
+                ['url' => route('account.addresses.index'), 'text' => 'Your Addresses'],
+                ['url' => '#', 'text' => $pageTitle]
+            ],
+            'title' => $pageTitle,
+        ];
+
+        return view('account.index', compact('rightSideView', 'pageTitle', 'breadcrumbs', 'address', 'countries'));
     }
 
     /**

@@ -3,6 +3,6 @@
 
     <!-- Display error -->
     @error('cf-turnstile-response')
-        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+        <p class="helper-text">{{ $message }}</p>
     @enderror
 @endif

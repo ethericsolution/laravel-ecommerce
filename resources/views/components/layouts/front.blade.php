@@ -12,7 +12,8 @@
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&ampdisplay=swap"
+        rel="stylesheet" />
 
     {{-- Meta Description --}}
     <meta name="description" content="{{ $description ?? setting('general.site_description') }}" />
@@ -46,25 +47,17 @@
     @endif
 </head>
 
-<body class="font-display bg-white" x-data="{
-    showMenu: false,
-    openSearch: false,
-    ...searchModal(),
-    focusInput() {
-        this.$nextTick(() => this.$refs.searchInput.focus())
-    }
-}" :class="{ 'overflow-hidden': openSearch || showMenu }"
-    x-init="$watch('openSearch', value => {
-        if (value) {
-            focusInput();
-        }
-    })" x-on:keydown.escape.window="openSearch = false">
+<body class="bg-base-100">
     <x-admin.alert />
-    <x-front.header />
+    <div class="bg-base-100">
+        <x-front.header />
 
-    {{ $slot }}
+        <main class="pt-16">
+            {{ $slot }}
+        </main>
 
-    <x-front.footer />
+        <x-front.footer />
+    </div>
 
     <!-- script file here -->
     @vite('resources/js/app.js')

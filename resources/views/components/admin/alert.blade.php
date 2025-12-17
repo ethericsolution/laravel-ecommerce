@@ -24,7 +24,7 @@
                                 class="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:outline-hidden"
                                 @click="show = false" aria-label="Close">
                                 <span class="sr-only">Close</span>
-                                <i data-lucide="x" class="size-5"></i>
+                                <span class="icon-[tabler--x] text-lg"></span>
                             </button>
                         </div>
                     </div>

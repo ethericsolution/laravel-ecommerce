@@ -37,12 +37,12 @@ Route::get('migrate', function () {
         ->with('success', 'Successfully migrated.');
 })->name('migrate');
 
-Route::get('migrate-fresh', function () {
+/* Route::get('migrate-fresh', function () {
     Artisan::call('migrate:fresh --seed');
 
     return redirect()->back()
         ->with('success', 'Successfully migrated and seeded.');
-})->name('migrate.refresh');
+})->name('migrate.refresh'); */
 
 
 Route::get('/login',  [LoginController::class, 'index'])->name('login')->middleware('guest:admin');
@@ -116,8 +116,6 @@ Route::group(['middleware' => 'auth:admin'], function () {
      * Route for Tax
      */
     Route::resource('taxes', TaxController::class)->except(['show']);
-
-
 
     /**
      * Admin Profile Routes

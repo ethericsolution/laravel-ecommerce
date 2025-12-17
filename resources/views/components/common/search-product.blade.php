@@ -5,7 +5,7 @@
         x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
 
-    <!-- Modal container -->
+    <!-- Modal mx-auto max-w-7xl -->
     <div class="fixed inset-0 z-10 w-screen overflow-y-auto p-4 sm:p-6 md:p-20" x-show="openSearch" x-cloak>
         <!-- Modal box -->
         <div class="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all"

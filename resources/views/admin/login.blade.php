@@ -18,7 +18,7 @@
 
     <link rel="icon" type="image/png" href="{{ getFaviconURL() }}" />
 
-    @vite(['resources/css/admin.css', 'resources/js/admin.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="h-full font-display">
@@ -34,31 +34,31 @@
             <form class="space-y-6" action="{{ route('admin.login.post') }}" method="POST">
                 @csrf
 
-                <div class="space-y-2">
-                    <label for="email" class="control-label">Email address</label>
+                <div class="space-y-1">
+                    <label for="email" class="label-text">Email address</label>
                     <input type="email" name="email" id="email" value="{{ old('email') }}" autocomplete="email"
-                        class="form-control @error('email') is-invalid @enderror" />
+                        class="input @error('email') is-invalid @enderror" />
                     @error('email')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
+                        <span class="helper-text">{{ $message }}</span>
                     @enderror
                 </div>
 
-                <div class="space-y-2">
-                    <label for="password" class="control-label">Password</label>
+                <div class="space-y-1">
+                    <label for="password" class="label-text">Password</label>
                     <input type="password" name="password" id="password" autocomplete="current-password"
-                        class="form-control @error('password') is-invalid @enderror">
+                        class="input @error('password') is-invalid @enderror">
                     @error('email')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
+                        <span class="helper-text">{{ $message }}</span>
                     @enderror
                 </div>
 
-                <div class="flex gap-3 items-center">
-                    <input id="remember-me" name="remember" type="checkbox" class="form-checkbox">
-                    <label for="remember-me" class="control-label">Remember me</label>
+                <div class="flex items-center gap-2">
+                    <input id="remember-me" name="remember" type="checkbox" class="checkbox checkbox-primary">
+                    <label for="remember-me" class="label-text text-base-content/80 p-0 text-base">Remember me</label>
                 </div>
 
                 <div>
-                    <button type="submit" class="flex w-full btn-primary justify-center">Sign in</button>
+                    <button type="submit" class="btn btn-primary w-full">Sign in</button>
                 </div>
             </form>
         </div>
@@ -69,8 +69,7 @@
                 &copy; {{ date('Y') }} {{ setting('general.app_name') }}. All rights reserved.
                 <span class="block md:inline mt-1 md:mt-0">
                     Developed by
-                    <a href="https://ethericsolution.com/" target="_blank"
-                        class="text-primary-600 hover:text-primary-700 transition-colors duration-300 font-semibold">
+                    <a href="https://ethericsolution.com/" target="_blank" class="link link-hover link-primary">
                         Etheric Solution
                     </a>
                 </span>

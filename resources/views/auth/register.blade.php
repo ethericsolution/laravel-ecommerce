@@ -8,86 +8,113 @@
 
     @include('components.common.breadcrumb', $breadcrumbs)
 
-    <!-- Sign Up Form Start -->
-    <div class="container py-20">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="card shadow-none border max-w-xl mx-auto">
+                <div class="card-body p-8 space-y-4">
 
-        <div class="w-full lg:w-1/2 bg-white shadow-xs rounded-xl border border-gray-200 mx-auto p-8">
-            <h2 class="text-center text-gray-800 xl:text-4xl text-xl font-bold mb-10">Sign Up</h2>
+                    <form method="POST" action="{{ route('register') }}" class="space-y-6">
+                        @csrf
 
-            <form method="POST" action="{{ route('register') }}" class="space-y-6">
-                @csrf
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- First Name -->
+                            <div class="space-y-1">
+                                <label class="label-text" for="first_name">First Name</label>
+                                <input type="text" id="first_name" name="first_name"
+                                    class="input @error('first_name') is-invalid @enderror"
+                                    value="{{ old('first_name') }}" autocomplete="given-name" />
+                                @error('first_name')
+                                    <span class="helper-text text-error">{{ $message }}</span>
+                                @enderror
+                            </div>
 
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="space-y-2.5">
-                        <label for="first_name" class="control-label">First Name</label>
-                        <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}"
-                            placeholder="First Name" class="form-control @error('first_name') is-invalid @enderror" />
-                        @error('first_name')
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+                            <!-- Last Name -->
+                            <div class="space-y-1">
+                                <label class="label-text" for="last_name">Last Name</label>
+                                <input type="text" id="last_name" name="last_name"
+                                    class="input @error('last_name') is-invalid @enderror"
+                                    value="{{ old('last_name') }}" autocomplete="family-name" />
+                                @error('last_name')
+                                    <span class="helper-text text-error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
 
-                    <div class="space-y-2.5">
-                        <label for="last_name" class="control-label">Last Name</label>
-                        <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}"
-                            placeholder="Last Name" class="form-control @error('last_name') is-invalid @enderror" />
-                        @error('last_name')
-                            <p class="text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+                        <!-- Email -->
+                        <div class="space-y-1">
+                            <label class="label-text" for="email">Email Address</label>
+                            <input id="email" type="email" name="email"
+                                class="input @error('email') is-invalid @enderror" value="{{ old('email') }}"
+                                autocomplete="email" />
+                            @error('email')
+                                <span class="helper-text text-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="space-y-1">
+                            <label class="label-text" for="phone">Phone Number</label>
+                            <input type="text" name="phone" class="input @error('phone') is-invalid @enderror"
+                                id="phone" value="{{ old('phone') }}" autocomplete="tel" />
+                            @error('phone')
+                                <span class="helper-text text-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Password -->
+                        <div class="space-y-1">
+                            <label class="label-text" for="password">Password</label>
+                            <div class="input @error('password') is-invalid @enderror">
+                                <input id="password" type="password" name="password" autocomplete="new-password" />
+                                <button type="button" data-toggle-password='{ "target": "#password" }'
+                                    class="block cursor-pointer" aria-label="password">
+                                    <span
+                                        class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
+                                    <span
+                                        class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
+                                </button>
+                            </div>
+                            @error('password')
+                                <span class="helper-text text-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="space-y-1">
+                            <label class="label-text" for="password_confirmation">Confirm Password</label>
+                            <div class="input">
+                                <input id="password_confirmation" type="password" name="password_confirmation"
+                                    autocomplete="new-password" />
+                                <button type="button" data-toggle-password='{ "target": "#password_confirmation" }'
+                                    class="block cursor-pointer" aria-label="password">
+                                    <span
+                                        class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
+                                    <span
+                                        class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <x-common.captcha />
+
+                        <div>
+                            <button type="submit" class="btn btn-lg btn-primary btn-gradient btn-block">
+                                Sign Up
+                            </button>
+                            <p class="text-muted text-sm">By Clicking I am agree with Terms &
+                                Conditions
+                            </p>
+                        </div>
+                    </form>
+
+
+                    <p class="text-base-content/80 mb-4 text-center">
+                        Already have an account?
+                        <a href="{{ route('login') }}" class="link link-animated link-primary font-normal">
+                            Sign in instead</a>
+                    </p>
                 </div>
-
-                <div class="space-y-2.5">
-                    <label for="email" class="control-label">Email</label>
-                    <input type="text" id="email" name="email" value="{{ old('email') }}" placeholder="Email"
-                        class="form-control @error('email') is-invalid @enderror" />
-                    @error('email')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="space-y-2.5">
-                    <label for="phone" class="control-label">Phone Number</label>
-                    <input type="text" id="phone" name="phone" value="{{ old('phone') }}"
-                        placeholder="Phone Number" class="form-control @error('phone') is-invalid @enderror" />
-                    @error('phone')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="space-y-2.5">
-                    <label for="password" class="control-label">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Password"
-                        class="form-control @error('password') is-invalid @enderror" />
-                    @error('password')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="space-y-2.5">
-                    <label for="password_confirmation" class="control-label">Confirm Password</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation"
-                        placeholder="Confirm Password"
-                        class="form-control @error('password_confirmation') is-invalid @enderror" />
-                    @error('password_confirmation')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <x-common.captcha />
-
-                <button type="submit" class="btn-primary w-full gap-x-2">
-                    Sign Up
-                    <i data-lucide="move-right" class="size-6"></i>
-                </button>
-            </form>
-            <p class="mt-4 text-sm/6 text-gray-800 opacity-70">By Clicking I am agree with Terms & Conditions</p>
-
-            <p class="font-normal text-base leading-tight text-gray-800 mt-6 text-center">
-                Already have an account?
-                <a href="{{ route('login') }}" class="text-primary-600 font-medium text-base leading-tight">
-                    Sign in instead</a>
-            </p>
+            </div>
         </div>
     </div>
     <!-- Sign Up Form End -->

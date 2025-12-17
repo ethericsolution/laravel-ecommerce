@@ -15,9 +15,22 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
 
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = $request->user();
+
+        $rightSideView = 'profile.edit';
+
+        $pageTitle = 'Account Details';
+
+        $breadcrumbs = [
+            'links' => [
+                ['url' => route('home'), 'text' => 'Home'],
+                ['url' => route('account.dashboard'), 'text' => 'Your Account'],
+                ['url' => '#', 'text' => $pageTitle]
+            ],
+            'title' => $pageTitle,
+        ];
+
+        return view('account.index', compact('rightSideView', 'pageTitle', 'breadcrumbs', 'user'));
     }
 
 
@@ -46,8 +59,22 @@ class ProfileController extends Controller
     public function password(Request $request)
     {
 
-        return view('profile.change-password', [
-            'user' => $request->user(),
-        ]);
+
+        $user = $request->user();
+
+        $rightSideView = 'profile.change-password';
+
+        $pageTitle = 'Change Password';
+
+        $breadcrumbs = [
+            'links' => [
+                ['url' => route('home'), 'text' => 'Home'],
+                ['url' => route('account.dashboard'), 'text' => 'Your Account'],
+                ['url' => '#', 'text' => $pageTitle]
+            ],
+            'title' => $pageTitle,
+        ];
+
+        return view('account.index', compact('rightSideView', 'pageTitle', 'breadcrumbs', 'user'));
     }
 }

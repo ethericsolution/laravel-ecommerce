@@ -8,8 +8,8 @@
 
     @include('components.common.breadcrumb', $breadcrumbs)
 
-    <section>
-        <div class="container px-3 md:px-5 xl:px-0">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="my-10 xl:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid grid-cols-1 gap-6">
                 @foreach ($products as $product)
                     <x-products.card :product="$product" />
@@ -19,5 +19,5 @@
             {{ $products->onEachSide(1)->links('pagination::front') }}
 
         </div>
-    </section>
+    </div>
 </x-layouts.front>

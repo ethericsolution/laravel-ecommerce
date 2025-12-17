@@ -17,6 +17,7 @@ class Order extends Model
         'order_date',
         'user_id',
         'status',
+        'ip_address',
         'sub_total',
         'delivery_charge',
         'grand_total',

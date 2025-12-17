@@ -10,12 +10,31 @@ class AccountController extends Controller
 {
     public function index(): View
     {
-        return view('account.index');
+        $rightSideView = 'account.dashboard';
+
+        $pageTitle = 'Your Account';
+
+        $breadcrumbs = [
+            'links' => [['url' => route('home'), 'text' => 'Home'], ['url' => '#', 'text' => $pageTitle]],
+            'title' => $pageTitle,
+        ];
+
+        return view('account.index', compact('rightSideView', 'pageTitle', 'breadcrumbs'));
     }
 
     public function wishlist(): View
     {
-        return view('account.wishlist');
+
+        $rightSideView = 'account.wishlist';
+
+        $pageTitle = 'Your Wishlist';
+
+        $breadcrumbs = [
+            'links' => [['url' => route('home'), 'text' => 'Home'], ['url' => '#', 'text' => $pageTitle]],
+            'title' => $pageTitle,
+        ];
+
+        return view('account.index', compact('rightSideView', 'pageTitle', 'breadcrumbs'));
     }
 
     public function addToWishlist($product_id): RedirectResponse
@@ -33,5 +52,4 @@ class AccountController extends Controller
         return redirect()->back()
             ->with('success', 'Product removed from Wishlist!!!');
     }
-
 }

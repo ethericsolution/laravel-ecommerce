@@ -20,52 +20,66 @@
     @include('components.common.breadcrumb', $breadcrumbs)
 
     <!-- product details section start -->
-    <section>
-        <div class="container px-3 md:px-5 xl:px-0">
-            <div class="md:grid md:grid-cols-2 gap-6 my-10">
-                {{-- Left Side --}}
-                <div class="gallery-container">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-                    <!-- Main Gallery -->
-                    <div class="swiper gallery-main mb-2">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="{{ $product->thumbnailURL() }}" alt="{{ $product?->name }}" loading="lazy" />
+            <div class="md:grid md:grid-cols-2 md:gap-10 xl:gap-24">
+
+                <div data-carousel='{ "loadingClasses": "opacity-0" }' class="relative w-full">
+                    <div class="carousel">
+                        <div class="carousel-body opacity-0">
+                            <div class="carousel-slide">
+                                <div class="flex size-full justify-center">
+                                    <img src="{{ $product->thumbnailURL('thumb') }}" class="size-full object-cover"
+                                        alt="{{ $product?->name }}" />
+                                </div>
                             </div>
                             @foreach ($product?->getMedia('product-images') as $image)
-                                <div class="swiper-slide">
-                                    <img src="{{ $image->getUrl() }}" alt="{{ $product?->name }}" loading="lazy" />
+                                <div class="carousel-slide">
+                                    <div class="flex size-full justify-center">
+                                        <img src="{{ $image->getUrl('thumb') }}" class="size-full object-cover"
+                                            alt="{{ $product?->name }}" />
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
-                    </div>
-                    <div class="hidden md:flex md:flex-col">
-                        <div class="swiper gallery-thumb">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="{{ $product->thumbnailURL('thumb') }}" alt="{{ $product?->name }}" />
-                                </div>
-                                @foreach ($product?->getMedia('product-images') as $image)
-                                    <div class="swiper-slide">
-                                        <img src="{{ $image->getUrl('thumb') }}" alt="{{ $product?->name }}"
-                                            loading="lazy" />
-                                    </div>
-                                @endforeach
-                            </div>
+                        <div
+                            class="carousel-pagination bg-base-100 absolute bottom-0 end-0 start-0 z-1 h-1/4 flex justify-center gap-2 overflow-x-auto pt-2">
+                            <img src="{{ $product->thumbnailURL('thumb') }}"
+                                class="carousel-pagination-item carousel-active:opacity-100 grow object-cover opacity-30"
+                                alt="{{ $product?->name }}" />
+                            @foreach ($product?->getMedia('product-images') as $image)
+                                <img src="{{ $image->getUrl('thumb') }}"
+                                    class="carousel-pagination-item carousel-active:opacity-100 grow object-cover opacity-30"
+                                    alt="{{ $product?->name }}" />
+                            @endforeach
                         </div>
+                        <!-- Previous Slide -->
+                        <button type="button"
+                            class="carousel-prev start-5 max-sm:start-3 carousel-disabled:opacity-50 size-9.5 bg-base-100 flex items-center justify-center rounded-full shadow-base-300/20 shadow-sm">
+                            <span class="icon-[tabler--chevron-left] size-5 cursor-pointer"></span>
+                            <span class="sr-only">Previous</span>
+                        </button>
+                        <!-- Next Slide -->
+                        <button type="button"
+                            class="carousel-next end-5 max-sm:end-3 carousel-disabled:opacity-50 size-9.5 bg-base-100 flex items-center justify-center rounded-full shadow-base-300/20 shadow-sm">
+                            <span class="icon-[tabler--chevron-right] size-5"></span>
+                            <span class="sr-only">Next</span>
+                        </button>
                     </div>
                 </div>
 
                 {{-- Right Side --}}
                 <div class="mt-6 md:mt-0">
-                    <h1 class="text-2xl lg:text-4xl font-semibold text-gray-800 mb-3">{{ $product->name }}</h1>
-                    {{-- <h2 class="text-gray-800 text-2xl font-semibold mb-3">{{ $product->name }}</h2> --}}
+                    <h1 class="text-base-content text-2xl font-medium md:text-3xl mb-6">
+                        {{ $product->name }}
+                    </h1>
                     <div class="flex items-center gap-2.5 mb-6">
                         <p class="flex gap-4 items-center">
                             <span class="text-gray-800 text-3xl">@money($product->selling_price)</span>
                             @if ($product->regular_price > $product->selling_price)
                                 <span class="text-2xl text-accent-500 line-through">@money($product->regular_price)</span>
-                                <span class="text-xl bg-red-100 text-red-600 px-2 py-1 rounded-full font-medium">
+                                <span class="badge badge-soft badge-success">
                                     {{ round((($product->regular_price - $product->selling_price) / $product->regular_price) * 100) }}%
                                     OFF
                                 </span>
@@ -73,41 +87,39 @@
                         </p>
                     </div>
 
-                    <div class="mb-6 prose max-w-none">
+                    <div class="mb-6">
                         {!! $product->short_description !!}
                     </div>
                     <form action="{{ route('products.addToCart') }}" method="POST">
                         @csrf
-
-                        <div x-data="{ count: 1 }" class="flex items-center my-6 text-gray-700">
-                            <button type="button"
-                                class="w-12 h-12 border border-gray-300 flex items-center justify-center text-2xl bg-white hover:bg-gray-100 transition rounded-l-lg"
-                                :disabled="count <= 1" @click="if(count > 1) count--">-</button>
-                            <div
-                                class="w-12 h-12 border-t border-b border-gray-300 flex items-center justify-center text-xl bg-white">
-                                <span x-text="count"></span>
-                                <input type="hidden" name="quantity" :value="count" />
-                            </div>
-                            <button type="button" @click="count++"
-                                class="w-12 h-12 border border-gray-300 flex items-center justify-center text-2xl bg-white hover:bg-gray-100 transition rounded-r-lg">+</button>
-                        </div>
-
                         <div class="flex flex-wrap lg:flex-nowrap items-center gap-3 mb-6">
-
+                            <div class="max-w-32" data-input-number='{ "min": 1 }'>
+                                <div class="input items-center">
+                                    <button type="button"
+                                        class="btn btn-primary btn-soft size-5.5 min-h-0 rounded-sm p-0"
+                                        aria-label="Decrement button" data-input-number-decrement>
+                                        <span class="icon-[tabler--minus] size-3.5 shrink-0"></span>
+                                    </button>
+                                    <input class="text-center" type="number" value="1" name="quantity"
+                                        aria-label="Mini stacked buttons" data-input-number-input id="number-input-mini"
+                                        readonly />
+                                    <button type="button"
+                                        class="btn btn-primary btn-soft size-5.5 min-h-0 rounded-sm p-0"
+                                        aria-label="Increment button" data-input-number-increment>
+                                        <span class="icon-[tabler--plus] size-3.5 shrink-0"></span>
+                                    </button>
+                                </div>
+                            </div>
                             <input type="hidden" name="product_id" value="{{ $product->id }}" />
-
-                            <button
-                                class="inline-flex items-center gap-2 bg-primary-600 border rounded-md leading-tight text-white font-bold px-4 py-3.5 hover:bg-primary-500 outline-none cursor-pointer">
-                                <span class="text-white text-base">
-                                    <i data-lucide="shopping-cart" class="size-5"></i>
-                                </span>
-                                <span class="text-white text-base">Add To Cart</span>
+                            <button class="btn btn-primary">
+                                <span class="icon-[tabler--shopping-cart] size-5.5 shrink-0"></span>
+                                Add To Cart
                             </button>
 
                             <a href="{{ route('account.addToWishlist', $product->id) }}"
-                                class="inline-flex items-center rounded-md bg-white px-4 py-3.5 text-sm font-bold text-primary-600 border border-primary-300 hover:bg-primary-50 gap-2">
-                                <i data-lucide="heart" class="size-5"></i>
-                                <span>Add to Wishlist</span>
+                                class="btn btn-outline btn-primary">
+                                <span class="icon-[tabler--heart] size-5.5 shrink-0"></span>
+                                Add to Wishlist
                             </a>
                         </div>
                     </form>
@@ -123,7 +135,8 @@
                         </p>
                     @endif
                     @if ($product->category_id)
-                        <p class="text-base/6 text-gray-700"><span class="text-gray-800 font-semibold">Category</span> :
+                        <p class="text-base/6 text-gray-700"><span class="text-gray-800 font-semibold">Category</span>
+                            :
                             <a class="text-primary-600 hover:underline"
                                 href="{{ route('products.byCategory', $product?->category) }}">{{ $product?->category?->name }}</a>
                         </p>
@@ -144,38 +157,39 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
     <!-- product details section end -->
 
-    <!-- recent products section start -->
-    <section class="lg:py-20 py-6 sm:py-12">
-        <div class="container px-3 md:px-5 xl:px-0">
-            <div class="flex justify-between items-center mb-10">
-                <h2 class="text-gray-800 xl:text-4xl xl:leading-tight text-xl md:text-2xl font-bold">
-                    Related <span class="text-gradient">Products</span></h2>
-                <div class="flex gap-6">
-                    <button class="recentSwiper-button-prev slider-nav">
-                        <i data-lucide="chevron-left" class="size-6"></i>
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+            data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "lg": 4 }, "isInfiniteLoop": true }'>
+            <div
+                class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+                <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Related Products
+                </h2>
+                <div class="flex gap-4">
+                    <button
+                        class="btn btn-square btn-sm carousel-prev btn-primary carousel-disabled:opacity-100 carousel-disabled:btn-outline relative hover:text-white">
+                        <span class="icon-[tabler--arrow-left] size-5"></span>
                     </button>
-                    <button class="recentSwiper-button-next slider-nav">
-                        <i data-lucide="chevron-right" class="size-6"></i>
+                    <button
+                        class="btn btn-square btn-sm carousel-next btn-primary carousel-disabled:opacity-100 carousel-disabled:btn-outline relative hover:text-white">
+                        <span class="icon-[tabler--arrow-right] size-5"></span>
                     </button>
                 </div>
             </div>
-            <div class="swiper recentSwiper overflow-hidden">
-                <div class="swiper-wrapper">
-                    @foreach ($product->relatedProducts(8) as $item)
-                        <div class="swiper-slide">
-                            <x-products.card :product="$item" />
-                        </div>
-                    @endforeach
+
+            <div class="relative w-full">
+                <div class="carousel">
+                    <div class="carousel-body h-full opacity-0 gap-6">
+                        @foreach ($product->relatedProducts(8) as $product)
+                            <div class="carousel-slide h-full">
+                                <x-products.card :product="$product" />
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- recent products section end -->
-
-    @push('scripts')
-        @vite('resources/js/single-product.js')
-    @endpush
+    </div>
 </x-layouts.front>

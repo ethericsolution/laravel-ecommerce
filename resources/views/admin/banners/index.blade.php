@@ -1,5 +1,5 @@
 <x-layouts.admin>
-    <div class="mx-auto">
+    <div class="max-w-7xl mx-auto space-y-6">
         @php
             $breadcrumbLinks = [
                 [
@@ -18,69 +18,63 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks title="Banners" :addNewAction="route('admin.banners.create')" />
 
-        <div class="mt-8 flow-root">
-            <x-admin.table.search />
+        <x-admin.table.search />
 
-            {{-- Banners Table --}}
-            <div class="overflow-hidden rounded-xl bg-white border border-gray-200">
-                <div class="p-6">
-                    <div class="-mx-6 -my-6 overflow-x-auto">
-                        <div class="inline-block min-w-full align-middle">
-                            <table class="record-table">
-                                <thead>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Link</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col" class="!text-center">Click Count</th>
-                                    <th scope="col" class="!text-center">View Count</th>
+        {{-- Banners Table --}}
+        <div class="card">
+            <div class="overflow-x-auto">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col" class="text-center">Location</th>
+                            <th scope="col" class="text-center">Click Count</th>
+                            <th scope="col" class="text-center">View Count</th>
+                            <th scope="col" class="relative">
+                                <span class="sr-only">Actions</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($banners as $banner)
+                            <tr>
+                                <td>
+                                    <div class="flex items-center gap-3">
+                                        <div class="avatar">
+                                            <div class="bg-base-content/10 h-10 w-10 rounded-md">
+                                                <img src="{{ $banner?->getMedia($banner->location)->first()?->getUrl() }}"
+                                                    alt="{{ $banner->name }}" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium">{{ $banner->name }}</div>
+                                            <div class="text-sm opacity-50">{{ $banner->link }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{ $banner->location }}</td>
+                                <td class="text-center">{{ $banner->click_count }}</td>
+                                <td class="text-center">{{ $banner->view_count }}</td>
 
-                                    <th scope="col" class="relative">
-                                        <span class="sr-only">Actions</span>
-                                    </th>
-                                </thead>
-                                <tbody>
-                                    @forelse ($banners as $banner)
-                                        <tr>
-                                            <td class="!font-semibold">
-                                                <div class="flex items-center">
-                                                    <div class="size-11 shrink-0">
-                                                        <img class="size-11 rounded-md"
-                                                            src="{{ $banner?->getMedia($banner->location)->first()?->getUrl() }}"
-                                                            alt="{{ $banner->name }}" loading="lazy" />
-                                                    </div>
-                                                    <div class="ml-4">
-                                                        <div class="font-medium text-gray-900">{{ $banner->name }}
-                                                        </div>
-                                                        <div class="mt-1 text-gray-500">{{ $banner->slug }}</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td>{{ $banner->link }}</td>
-                                            <td>{{ $banner->location }}</td>
-                                            <td class="text-center">{{ $banner->click_count }}</td>
-                                            <td class="text-center">{{ $banner->view_count }}</td>
-
-                                            {{-- Actions --}}
-
-                                            <td class="relative text-right text-sm space-x-1 items-center">
-                                                <x-admin.links.edit :href="route('admin.banners.edit', $banner)" />
-
-                                                <x-admin.links.delete :action="route('admin.banners.destroy', $banner)" />
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center">No Records found</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                                {{-- Actions --}}
+                                <td class="space-x-1 text-right">
+                                    <x-admin.links.edit :href="route('admin.banners.edit', $banner)" />
+                                    <x-admin.links.delete :action="route('admin.banners.destroy', $banner)" />
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">No Records found</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
-            {!! $banners->links() !!}
+            @if ($banners->hasPages())
+                <div class="card-footer border-t border-gray-200 p-4">
+                    {!! $banners->links() !!}
+                </div>
+            @endif
         </div>
     </div>
 </x-layouts.admin>

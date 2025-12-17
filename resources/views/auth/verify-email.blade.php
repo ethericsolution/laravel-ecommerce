@@ -8,41 +8,36 @@
 
     @include('components.common.breadcrumb', $breadcrumbs)
 
-    <div class="container py-20">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="card shadow-none border max-w-xl mx-auto">
+                <div class="card-body p-8 space-y-6 text-center">
 
-        <div class="w-full lg:w-1/2 bg-white shadow-xs rounded-xl border border-gray-200 mx-auto p-8">
-            <h2 class="text-center text-gray-800 xl:text-4xl text-xl font-bold mb-10">{{ __('Email Verification') }}</h2>
+                    <h2 class="text-2xl font-bold text-base-content">Email Verification</h2>
 
-            <div class="mx-12">
-                <p class="mb-6 text-gray-600 text-base/6 text-center">
-                    {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-                </p>
+                    <p class="text-base-content/80">
+                        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+                    </p>
 
-                @if (session('status') == 'verification-link-sent')
-                    <div class="text-center text-green-400 mb-4">
-                        {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-                    </div>
-                @endif
+                    <form method="POST" action="{{ route('verification.send') }}">
+                        @csrf
+
+                        <x-common.captcha />
+
+                        <button type="submit" class="btn btn-primary btn-gradient">
+                            {{ __('Resend Verification Email') }}
+                        </button>
+                    </form>
+
+                    <form class="text-center mt-6" method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-soft btn-primary">
+                            {{ __('Back to login') }}
+                            <span class="icon-[tabler--logout] text-lg"></span>
+                        </button>
+                    </form>
+                </div>
             </div>
-
-            <form method="POST" action="{{ route('verification.send') }}" class="space-y-6">
-                @csrf
-
-                <x-common.captcha />
-
-                <button type="submit" class="btn-primary w-full gap-x-2">
-                    {{ __('Resend Verification Email') }}
-                    <i data-lucide="move-right" class="size-6"></i>
-                </button>
-            </form>
-
-            <form class="text-center mt-6" method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="text-primary-600 font-medium text-base leading-tight cursor-pointer">
-                    {{ __('Back to login') }}
-                    <i data-lucide="move-left" class="size-6"></i>
-                </button>
-            </form>
         </div>
     </div>
 

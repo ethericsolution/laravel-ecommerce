@@ -1,7 +1,7 @@
 <x-layouts.admin>
 
 
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto space-y-6">
         @php
             $breadcrumbLinks = [
                 [
@@ -25,63 +25,59 @@
             @csrf
 
             <input type="hidden" name="group_name" value="social_media" />
-            <div class="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
-                <div class="p-6">
+            <div class="card">
+                <div class="card-body">
                     <div class="grid md:grid-cols-2 gap-4">
 
-                        <div class="space-y-2">
+                        <div class="space-y-1">
                             <div class="flex justify-between">
-                                <label for="facebook" class="control-label">Facebook</label>
-                                <span class="text-sm/6 text-gray-500"
-                                    id="facebook-optional">setting('social.facebook')</span>
+                                <label for="facebook" class="label-text">Facebook</label>
+                                <span class="helper-text" id="facebook-optional">setting('social.facebook')</span>
                             </div>
                             <input type="text" name="facebook" id="facebook"
-                                class="form-control @error('facebook') is-invalid @enderror"
+                                class="input @error('facebook') is-invalid @enderror"
                                 value="{{ old('facebook', $settings->facebook) }}" />
                             @error('facebook')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
+                        <div class="space-y-1">
                             <div class="flex justify-between">
-                                <label for="instagram" class="control-label">Instagram</label>
-                                <span class="text-sm/6 text-gray-500"
-                                    id="instagram-optional">setting('social.instagram')</span>
+                                <label for="instagram" class="label-text">Instagram</label>
+                                <span class="helper-text" id="instagram-optional">setting('social.instagram')</span>
                             </div>
                             <input type="text" name="instagram" id="instagram"
-                                class="form-control @error('instagram') is-invalid @enderror"
+                                class="input @error('instagram') is-invalid @enderror"
                                 value="{{ old('instagram', $settings->instagram) }}" />
                             @error('instagram')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
+                        <div class="space-y-1">
                             <div class="flex justify-between">
-                                <label for="youtube" class="control-label">YouTube</label>
-                                <span class="text-sm/6 text-gray-500"
-                                    id="youtube-optional">setting('social.youtube')</span>
+                                <label for="youtube" class="label-text">YouTube</label>
+                                <span class="helper-text" id="youtube-optional">setting('social.youtube')</span>
                             </div>
                             <input type="text" name="youtube" id="youtube"
-                                class="form-control @error('youtube') is-invalid @enderror"
+                                class="input @error('youtube') is-invalid @enderror"
                                 value="{{ old('youtube', $settings->youtube) }}" />
                             @error('youtube')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
+                        <div class="space-y-1">
                             <div class="flex justify-between">
-                                <label for="twitter" class="control-label">Twitter</label>
-                                <span class="text-sm/6 text-gray-500"
-                                    id="twitter-optional">setting('social.twitter')</span>
+                                <label for="twitter" class="label-text">Twitter</label>
+                                <span class="helper-text" id="twitter-optional">setting('social.twitter')</span>
                             </div>
                             <input type="text" name="twitter" id="twitter"
-                                class="form-control @error('twitter') is-invalid @enderror"
+                                class="input @error('twitter') is-invalid @enderror"
                                 value="{{ old('twitter', $settings->twitter) }}" />
                             @error('twitter')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -90,7 +86,7 @@
             </div>
 
             <div class="mt-6 space-x-2">
-                <button type="submit" class="btn-primary">Save Changes</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
         </form>
     </div>

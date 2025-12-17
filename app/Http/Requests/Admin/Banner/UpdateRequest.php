@@ -25,8 +25,8 @@ class UpdateRequest extends FormRequest
             'name'          => ['required', 'string', 'max:255'],
             'link'          => ['nullable', 'url', 'max:255'],
             'location'      => ['required', 'string', 'max:255'],
-            'is_active'     => ['required'],
-            'is_new_tab'    => ['required'],
+            'is_active'     => ['boolean'],
+            'is_new_tab'    => ['boolean'],
         ];
     }
 }

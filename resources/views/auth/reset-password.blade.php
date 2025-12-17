@@ -9,60 +9,76 @@
     @include('components.common.breadcrumb', $breadcrumbs)
 
     <!-- Reset Password Form Start -->
-    <div class="container py-20">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="card shadow-none border max-w-xl mx-auto">
+                <div class="card-body p-8 space-y-4">
 
-        <div class="w-full lg:w-1/2 bg-white shadow-xs rounded-xl border border-gray-200 mx-auto p-8">
-            <h2 class="text-center text-gray-800 xl:text-4xl text-xl font-bold mb-10">Reset Password</h2>
+                    <form method="POST" action="{{ route('password.store') }}" class="space-y-6">
+                        @csrf
 
-            <form method="POST" action="{{ route('password.store') }}" class="space-y-6">
-                @csrf
+                        <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-                <input type="hidden" name="token" value="{{ $request->route('token') }}">
+                        <div class="space-y-1 text-left">
+                            <label class="label-text" for="email">Email address</label>
+                            <input type="email" name="email" value="{{ old('email', $request->email) }}"
+                                class="input @error('email') is-invalid @enderror" id="email" required />
+                            @error('email')
+                                <span class="helper-text text-error">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                <div class="space-y-2.5">
-                    <label for="email" class="control-label">Email</label>
-                    <input type="text" id="email" name="email" value="{{ old('email', $request->email) }}"
-                        placeholder="Email" class="form-control @error('email') is-invalid @enderror" />
-                    @error('email')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                        <div class="space-y-1 text-left">
+                            <label class="label-text" for="password">{{ __('New Password') }}</label>
+                            <div class="input @error('password') is-invalid @enderror">
+                                <input id="password" type="password" name="password" autocomplete="new-password"
+                                    required />
+                                <button type="button" data-toggle-password='{ "target": "#password" }'
+                                    class="block cursor-pointer" aria-label="password">
+                                    <span
+                                        class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
+                                    <span
+                                        class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
+                                </button>
+                            </div>
+
+                            @error('password')
+                                <span class="helper-text text-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="space-y-1 text-left">
+                            <label class="label-text"
+                                for="password_confirmation">{{ __('Confirm New Password') }}</label>
+                            <div class="input">
+                                <input id="password_confirmation" type="password" name="password_confirmation"
+                                    autocomplete="new-password" required />
+                                <button type="button" data-toggle-password='{ "target": "#password_confirmation" }'
+                                    class="block cursor-pointer" aria-label="password_confirmation">
+                                    <span
+                                        class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
+                                    <span
+                                        class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <x-common.captcha />
+
+                        <button type="submit" class="btn btn-primary btn-gradient btn-lg w-full">
+                            {{ __('Reset Password') }}
+                        </button>
+                    </form>
+
+
+                    <p class="font-normal text-base leading-tight text-gray-800 mt-6 text-center">
+                        <a href="{{ route('login') }}" class="text-primary-600 font-medium text-base leading-tight">
+                            {{ __('Back to login') }}</a>
+                    </p>
+
                 </div>
-
-                <div class="space-y-2.5">
-                    <label for="password" class="control-label">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Password"
-                        class="form-control @error('password') is-invalid @enderror" />
-                    @error('password')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="space-y-2.5">
-                    <label for="password_confirmation" class="control-label">Confirm Password</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation"
-                        placeholder="Confirm Password"
-                        class="form-control @error('password_confirmation') is-invalid @enderror" />
-                    @error('password_confirmation')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <x-common.captcha />
-
-                <button type="submit" class="btn-primary w-full gap-x-2">
-                    {{ __('Reset Password') }}
-                    <i data-lucide="move-right" class="size-6"></i>
-                </button>
-            </form>
-
-
-            <p class="font-normal text-base leading-tight text-gray-800 mt-6 text-center">
-                <a href="{{ route('login') }}" class="text-primary-600 font-medium text-base leading-tight">
-                    {{ __('Back to login') }}</a>
-            </p>
-
+            </div>
         </div>
     </div>
-    <!-- Sign In Form End -->
 
 </x-layouts.front>

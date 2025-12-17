@@ -1,5 +1,5 @@
 <x-layouts.admin>
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto space-y-6">
 
         @php
             $breadcrumbLinks = [
@@ -28,22 +28,21 @@
                 @method('put')
             @endisset
 
-            <div class="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
-                <div class="p-6">
+            <div class="card">
+                <div class="card-body">
                     <div class="grid md:grid-cols-2 gap-4">
-                        <div class="space-y-2">
-                            <label for="name" class="control-label">Name</label>
+                        <div class="space-y-1">
+                            <label for="name" class="label-text">Name</label>
                             <input type="text" name="name" id="name" value="{{ old('name', $tax->name) }}"
-                                class="form-control @error('name') is-invalid @enderror" />
+                                class="input @error('name') is-invalid @enderror" />
                             @error('name')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="type" class="control-label">Type</label>
-                            <select name="type" id="type"
-                                class="form-select @error('type') is-invalid @enderror">
+                        <div class="space-y-1">
+                            <label for="type" class="label-text">Type</label>
+                            <select name="type" id="type" class="select @error('type') is-invalid @enderror">
                                 @foreach (\App\Enums\TaxType::cases() as $method)
                                     <option value="{{ $method->value }}" @selected(old('type', $tax->type ?? 'default') == $method->value)>
                                         {{ $method->label() }}
@@ -51,16 +50,16 @@
                                 @endforeach
                             </select>
                             @error('type')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="rate" class="control-label">Rate</label>
+                        <div class="space-y-1">
+                            <label for="rate" class="label-text">Rate</label>
                             <input type="text" name="rate" id="rate" value="{{ old('rate', $tax->rate) }}"
-                                class="form-control @error('rate') is-invalid @enderror" />
+                                class="input @error('rate') is-invalid @enderror" />
                             @error('rate')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
@@ -68,8 +67,8 @@
             </div>
 
             <div class="mt-6 space-x-2">
-                <button type="submit" class="btn-primary">Submit</button>
-                <a href="{{ route('admin.taxes.index') }}" class="btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ route('admin.taxes.index') }}" class="btn btn-soft">Cancel</a>
             </div>
         </form>
     </div>

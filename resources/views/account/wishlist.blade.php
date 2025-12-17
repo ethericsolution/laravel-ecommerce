@@ -1,94 +1,52 @@
-<x-layouts.front>
-    @php
-        $breadcrumbs = [
-            'links' => [
-                ['url' => route('home'), 'text' => 'Home'],
-                ['url' => route('account.dashboard'), 'text' => 'Your Account'],
-                ['url' => '#', 'text' => 'Your Wishlists'],
-            ],
-            'title' => 'Your Wishlists',
-        ];
-    @endphp
+<div class="space-y-6">
+    @foreach (auth()->user()->wishlists as $product)
+        <div
+            class="card card-border sm:card-side max-w-sm sm:max-w-full hover:border-primary transition-border shadow-none duration-300">
 
-    @include('components.common.breadcrumb', $breadcrumbs)
+            <div class="card-body sm:grid sm:grid-cols-12 sm:gap-6">
+                <div class="sm:col-span-3">
+                    <figure>
+                        <a href="{{ route('products.show', $product) }}">
+                            <img src="{{ $product?->thumbnailURL('thumb') }}" alt="{{ $product->name }}"
+                                class="rounded-box" />
+                        </a>
+                    </figure>
+                </div>
+                <div class="sm:col-span-9">
+                    <a href="{{ route('products.show', $product) }}">
+                        <h5 class="card-title text-primary text-xl mb-0.5">{{ $product->name }}</h5>
+                    </a>
+                    <p class="mb-2 line-clamp-2">{{ $product->short_description }}</p>
 
+                    <p class="mb-4">@money($product->selling_price)
+                        @if ($product->regular_price > $product->selling_price)
+                            <span class="line-through">@money($product->regular_price)</span>
+                            <span class="badge badge-soft badge-success">
+                                {{ round((($product->regular_price - $product->selling_price) / $product->regular_price) * 100) }}%
+                                OFF
+                            </span>
+                        @endif
+                    </p>
+                    <div class="card-actions">
+                        <form action="{{ route('products.addToCart') }}" method="POST" class="flex justify-end">
+                            @csrf
+                            <input type="hidden" name="quantity" value="1" />
+                            <input type="hidden" name="product_id" value="{{ $product->id }}" />
 
-    <section class="xl:pb-20 pb-8 md:pb-12">
-        <div class="container lg:flex px-3 md:px-5 xl:px-0 gap-6">
+                            <button class="btn btn-primary">
+                                <span class="icon-[tabler--shopping-bag] size-5"></span>
+                                Add to cart
+                            </button>
+                        </form>
 
-            <x-account.nav />
-
-            <div class="w-full">
-                <div class="my-10 overflow-hidden rounded-xl bg-white shadow-xs border border-gray-200">
-                    <div class="p-6 border-b border-gray-200">
-                        <h3 class="text-xl/6 font-semibold text-gray-800">Your Wishlists</h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="-mx-6 -my-6 overflow-x-auto">
-                            <div class="inline-block min-w-full align-middle">
-                                <table class="record-table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">Product</th>
-                                            <th scope="col" class="!text-right">Price</th>
-                                            <th scope="col">
-                                                <span class="sr-only">Action</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse (auth()->user()->wishlists as $product)
-                                            <tr>
-                                                <td width="1%">
-                                                    <a href="{{ route('account.removeFromWishlist', $product->id) }}"
-                                                        class="!text-red-600 hover:text-red-900">
-                                                        <i data-lucide="trash-2" class="size-4"></i>
-                                                    </a>
-                                                </td>
-                                                <td width="50%">
-                                                    <div class="flex items-center">
-                                                        <div class="shrink-0">
-                                                            <a href="{{ route('products.show', $product) }}">
-                                                                <img class="h-18 w-auto rounded-lg"
-                                                                    src="{{ $product?->thumbnailURL('thumb') }}"
-                                                                    alt="{{ $product->name }}" loading="lazy" />
-                                                            </a>
-                                                        </div>
-                                                        <div class="ml-4 max-w-112 text-wrap">
-                                                            <a href="{{ route('products.show', $product) }}"
-                                                                class="font-medium text-base/6 text-gray-900">{{ $product->name }}
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-right">@money($product->selling_price)</td>
-                                                <td width="10%">
-                                                    <form action="{{ route('products.addToCart') }}" method="POST"
-                                                        class="flex justify-end">
-                                                        @csrf
-                                                        <input type="hidden" name="quantity" value="1" />
-                                                        <input type="hidden" name="product_id"
-                                                            value="{{ $product->id }}" />
-
-                                                        <button type="submit" class="btn-primary  !p-2 !text-sm">Add to
-                                                            Cart</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="4" class="text-center">No Products in Wishlist !!!</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        <a href="{{ route('account.removeFromWishlist', $product->id) }}"
+                            class="btn btn-outline btn-error">
+                            <span class="icon-[tabler--trash] size-5"></span>
+                            Remove from Wishlist
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-</x-layouts.front>
+    @endforeach
+</div>

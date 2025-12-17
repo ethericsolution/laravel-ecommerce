@@ -68,13 +68,6 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        /*  $validated = $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name'  => ['nullable', 'string', 'max:255'],
-            'email'      => ['required', 'email', 'string', 'unique:users,id,' . $user->id, 'max:255'],
-            'phone'      => ['required', 'string', 'max:20'],
-        ]); */
-
         $user->fill($request->validated());
         if ($request->filled('password')) {
             $user->password = $request->password;

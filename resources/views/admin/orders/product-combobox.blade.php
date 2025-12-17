@@ -6,7 +6,7 @@
                 @keydown.arrow-down.prevent="highlightNext()" @keydown.arrow-up.prevent="highlightPrev()"
                 @keydown.enter.prevent="selectHighlighted()" x-on:mouseout="highlighted = -1" id="product_combobox"
                 type="text" name="product_name" id="product_name"
-                class="form-control @error('product_id') is-invalid @enderror" role="combobox" :aria-expanded="open"
+                class="input @error('product_id') is-invalid @enderror" role="combobox" :aria-expanded="open"
                 autocomplete="off">
 
             <input type="hidden" :name="'items[' + index + '][product_id]'" id="product_id" x-model="selectedId" />

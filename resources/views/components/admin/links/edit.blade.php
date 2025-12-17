@@ -1,3 +1,3 @@
-<a {{ $attributes->merge(['class' => 'link-primary relative inline-flex']) }}>
-    <i data-lucide="square-pen" class="size-5"></i>
+<a {{ $attributes->merge(['class' => 'btn btn-circle btn-text btn-sm']) }}>
+    <span class="icon-[tabler--pencil] size-5"></span>
 </a>

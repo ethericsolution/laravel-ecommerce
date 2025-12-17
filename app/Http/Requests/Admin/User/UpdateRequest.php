@@ -27,7 +27,6 @@ class UpdateRequest extends FormRequest
             'last_name'  => ['nullable', 'string', 'max:255'],
             'email'      => ['required', 'email', 'string', 'max:255', Rule::unique('users', 'email')->ignore($this->user)],
             'phone'      => ['required', 'string', 'max:20'],
-            'password'   => ['required'],
         ];
     }
 }

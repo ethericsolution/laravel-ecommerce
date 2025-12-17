@@ -77,7 +77,7 @@ class CartController extends Controller
             applyTaxesToObject($cartItem, $itemTotal);
         }
 
-        return redirect()->back()
+        return redirect()->route('account.checkout')
             ->with('success', 'Cart updated successfully!!!');
     }
 }

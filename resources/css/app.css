@@ -1,165 +1,33 @@
 @import 'tailwindcss';
+
+@plugin "flyonui" {
+    themes: light --default, dark --false;
+}
+
+@import "../../node_modules/flyonui/variants.css";
+
+@source "../../node_modules/flyonui/flyonui.js";
+
+@plugin "@iconify/tailwind4";
+
 @plugin "@tailwindcss/typography";
 
-@plugin "@tailwindcss/forms";
 
-@plugin 'tailwind-scrollbar' {
-    preferredStrategy: 'pseudoelements';
+@plugin "flyonui/theme" {
+    name: "light";
+    default: true;
+    --color-primary: #498536;
 }
-
 
 @theme {
-    --font-display: 'Inter', sans-serif;
-    --font-display2: 'DM Sans', sans-serif;
-
-    --breakpoint-sm: 600px;
-    --breakpoint-md: 728px;
-    --breakpoint-lg: 920px;
-    --breakpoint-2xl: 1320px;
-    --breakpoint-3xl: 1536px;
-
-    --color-primary-50: #f5fce9;
-    --color-primary-100: #e8f8cf;
-    --color-primary-200: #d2f1a5;
-    --color-primary-300: #b3e670;
-    --color-primary-400: #95d744;
-    --color-primary-500: #80cc28;
-    --color-primary-600: #5a9719;
-    --color-primary-700: #467318;
-    --color-primary-800: #3a5b19;
-    --color-primary-900: #324e19;
-
-    --color-accent-50: #f8fafc;
-    --color-accent-100: #f1f5f9;
-    --color-accent-200: #e2e8f0;
-    --color-accent-300: #cbd5e1;
-    --color-accent-400: #94a3b8;
-    --color-accent-500: #64748b;
-    --color-accent-600: #475569;
-    --color-accent-700: #334155;
-    --color-accent-800: #1e293b;
-    --color-accent-900: #0f172a;
-
-    --shadow-elegant: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-card: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-hover: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
 }
 
-@utility container {
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0rem;
+[data-theme='dark'] li:not(.menu-title, .menu-disabled)> :not(ul, .menu-title, .collapse, .accordion-content, .btn).menu-active {
+    background-color: var(--color-primary);
+    color: var(--color-primary-content);
 }
 
-[x-cloak] {
-    display: none;
-}
-
-.control-label {
-    @apply inline-block text-sm font-medium text-gray-700;
-}
-
-.form-control {
-    @apply w-full rounded-lg py-2.5 px-4 border-gray-300 bg-gray-50 focus:border-primary-500 focus:ring-primary-500 transition-colors duration-200;
-}
-
-.form-select {
-    @apply w-full rounded-lg py-2.5 px-4 border-gray-300 bg-gray-50 focus:border-primary-500 focus:ring-primary-500 transition-colors duration-200;
-}
-
-.is-invalid {
-    @apply !border-red-300 !bg-red-50 !text-red-900 !placeholder-red-300 focus:ring-red-500 focus:border-red-500;
-}
-
-.form-checkbox {
-    @apply rounded border-gray-300 text-primary-600 focus:ring-primary-600;
-}
-
-.form-radio {
-    @apply border-gray-300 text-primary-600 focus:ring-primary-600;
-}
-
-.btn-primary {
-    @apply flex justify-center items-center rounded-lg cursor-pointer bg-primary-600 px-4 py-2.5 font-semibold text-white transition-all duration-300 hover:bg-primary-700 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600;
-}
-
-.btn-secondary {
-    @apply flex justify-center items-center rounded-lg cursor-pointer bg-white border-2 border-primary-600 px-4 py-3 font-semibold text-primary-600 transition-all duration-300 hover:bg-primary-50 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600;
-}
-
-.btn-ghost {
-    @apply flex justify-center items-center rounded-lg cursor-pointer bg-transparent px-4 py-3 font-semibold text-accent-700 transition-all duration-300 hover:bg-accent-100 hover:text-accent-900;
-}
-
-.record-table {
-    @apply min-w-full divide-y divide-gray-300;
-}
-
-.record-table th {
-    @apply px-3 py-3.5 text-left text-base font-semibold text-gray-900;
-}
-
-.record-table tbody {
-    @apply divide-y divide-gray-200 bg-white;
-}
-
-.record-table td {
-    @apply whitespace-nowrap px-3 py-4 text-base text-gray-600;
-}
-
-.swiper-pagination-bullet {
-    @apply !bg-primary-600;
-}
-
-.gallery-main {
-    .swiper-wrapper {
-        @apply m-0 p-0;
-
-        .swiper-slide {
-            @apply !aspect-square !overflow-hidden rounded-lg border border-gray-100;
-
-            img {
-                @apply w-full object-center aspect-square rounded-lg;
-            }
-        }
-    }
-}
-
-.gallery-thumb {
-    .swiper-wrapper {
-        @apply !block m-0 p-0;
-
-        .swiper-slide {
-            @apply !mx-auto opacity-50 inline-flex !w-20 !aspect-square !overflow-hidden rounded-lg p-0.5;
-
-            img {
-                @apply object-contain aspect-square w-fit rounded-lg;
-            }
-        }
-
-        .swiper-slide-thumb-active {
-            @apply opacity-100 border-2 border-primary-600;
-
-        }
-    }
-}
-
-.slider-nav {
-    @apply p-3 bg-white border-2 border-primary-600 text-primary-600 rounded-full cursor-pointer transition-all duration-300 hover:bg-primary-600 hover:text-white hover:shadow-lg;
-}
-
-.card-modern {
-    @apply bg-white rounded-xl border border-accent-200 transition-all duration-300 hover:shadow-card hover:border-primary-200;
-}
-
-.section-padding {
-    @apply py-16 lg:py-24;
-}
-
-.text-gradient {
-    @apply bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent;
-}
-
-.glass-effect {
-    @apply bg-white/80 backdrop-blur-sm border border-white/20;
+body {
+    color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
 }

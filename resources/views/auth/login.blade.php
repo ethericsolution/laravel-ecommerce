@@ -8,63 +8,63 @@
 
     @include('components.common.breadcrumb', $breadcrumbs)
 
-    <!-- Sign In Form Start -->
-    <div class="container py-20">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="card shadow-none border max-w-xl mx-auto">
+                <div class="card-body p-8 space-y-4">
+                    <form class="mb-4 space-y-4" method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="space-y-1">
+                            <label class="label-text" for="email">{{ __('Email Address') }}</label>
+                            <input id="email" type="email" class="input @error('email') is-invalid @enderror"
+                                name="email" value="{{ old('email') }}" autocomplete="email" autofocus />
 
-        <div class="w-full lg:w-1/2 bg-white shadow-xs rounded-xl border border-gray-200 mx-auto p-8">
-            <h2 class="text-center text-gray-800 xl:text-4xl text-xl font-bold mb-10">Sign In</h2>
+                            @error('email')
+                                <span class="helper-text">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-            <form method="POST" action="{{ route('login') }}" class="space-y-6">
-                @csrf
+                        <div class="space-y-1">
+                            <label class="label-text" for="password">{{ __('Password') }}</label>
+                            <div class="input @error('password') is-invalid @enderror">
+                                <input id="password" type="password" name="password" autocomplete="current-password" />
+                                <button type="button" data-toggle-password='{ "target": "#password" }'
+                                    class="block cursor-pointer" aria-label="password">
+                                    <span
+                                        class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
+                                    <span
+                                        class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
+                                </button>
+                            </div>
 
-                <div class="space-y-2.5">
-                    <label for="email" class="control-label">Email</label>
-                    <input type="text" id="email" name="email" value="{{ old('email') }}" placeholder="Email"
-                        class="form-control @error('email') is-invalid @enderror" />
-                    @error('email')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+                            @error('password')
+                                <span class="helper-text">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="flex items-center justify-between gap-y-2">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" class="checkbox checkbox-primary" id="remember" name="remember"
+                                    {{ old('remember') ? 'checked' : '' }} />
+                                <label class="label-text text-base-content/80 p-0 text-base"
+                                    for="remember">{{ __('Remember Me') }}</label>
+                            </div>
+                            <a href="{{ route('password.request') }}"
+                                class="link link-animated link-primary font-normal">{{ __('Forgot Password?') }}</a>
+                        </div>
 
-                <div class="space-y-2.5">
-                    <label for="password" class="control-label">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Password"
-                        class="form-control @error('password') is-invalid @enderror" />
-                    @error('password')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+                        <x-common.captcha />
 
-                <div class="flex justify-between items-center">
-                    <div class="flex gap-3 items-center">
-                        <input id="remember-me" name="remember" type="checkbox" class="form-checkbox size-5" />
-                        <label for="remember-me" class="control-label">Remember me</label>
-                    </div>
-
-                    @if (Route::has('password.request'))
-                        <a class="text-primary-600 text-base font-medium leading-tight"
-                            href="{{ route('password.request') }}">
-                            <span>{{ __('Forgot your password?') }}</span>
-                        </a>
+                        <button class="btn btn-lg btn-primary btn-gradient btn-block">{{ __('Sign In') }}</button>
+                    </form>
+                    @if (Route::has('register'))
+                        <p class="text-base-content/80 mb-4 text-center">
+                            Don't have account?
+                            <a href="{{ route('register') }}" class="link link-animated link-primary font-normal">
+                                {{ __('Sign Up') }}</a>
+                        </p>
                     @endif
                 </div>
-
-                <x-common.captcha />
-
-                <button type="submit" class="btn-primary w-full gap-x-2">
-                    Sign In
-                    <i data-lucide="move-right" class="size-6"></i>
-                </button>
-            </form>
-
-            @if (Route::has('register'))
-                <p class="font-normal text-base/tight text-gray-800 mt-6 text-center">
-                    Don't have account?
-                    <a href="{{ route('register') }}" class="text-primary-600 font-medium text-base/tight">
-                        Sign Up</a>
-                </p>
-            @endif
+            </div>
         </div>
     </div>
-    <!-- Sign In Form End -->
 </x-layouts.front>

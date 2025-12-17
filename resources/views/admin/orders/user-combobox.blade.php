@@ -2,8 +2,7 @@
     <input x-model="query" @input="searchUsers" @focus="open = !open" @keydown.arrow-down.prevent="highlightNext()"
         @keydown.arrow-up.prevent="highlightPrev()" @keydown.enter.prevent="selectHighlighted()"
         x-on:mouseout="highlighted = -1" id="user_combobox" type="text" name="user_name" id="user_name"
-        class="form-control @error('user_id') is-invalid @enderror" role="combobox" :aria-expanded="open"
-        autocomplete="off">
+        class="input @error('user_id') is-invalid @enderror" role="combobox" :aria-expanded="open" autocomplete="off">
     <input type="hidden" name="user_id" id="user_id" x-model="selectedId" />
     <button type="button" class="absolute inset-y-0 right-0 flex items-center rounded-r-lg px-2 focus:outline-hidden"
         @click="open = !open">

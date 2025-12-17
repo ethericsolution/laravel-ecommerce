@@ -1,68 +1,57 @@
-@php
-    $navigation = [
-        [
-            'name' => 'Dashboard',
-            'route' => route('account.dashboard'),
-            'active' => ($active = request()->routeIs('account.dashboard')),
-            'icon' => lucide_icon('house', $active),
-        ],
-        [
-            'name' => 'Your Orders',
-            'route' => route('account.orders.index'),
-            'active' => ($active = request()->routeIs('account.orders.*')),
-            'icon' => lucide_icon('shopping-cart', $active),
-        ],
-        [
-            'name' => 'Your Addresses',
-            'route' => route('account.addresses.index'),
-            'active' => ($active = request()->routeIs('account.addresses.*')),
-            'icon' => lucide_icon('book-user', $active),
-        ],
-        [
-            'name' => 'Your Wishlist',
-            'route' => route('account.wishlist'),
-            'active' => ($active = request()->routeIs('account.wishlist')),
-            'icon' => lucide_icon('heart', $active),
-        ],
-        [
-            'name' => 'Account Details',
-            'route' => route('profile.edit'),
-            'active' => ($active = request()->routeIs('profile.edit')),
-            'icon' => lucide_icon('user-pen', $active),
-        ],
-        [
-            'name' => 'Change Password',
-            'route' => route('profile.password'),
-            'active' => ($active = request()->routeIs('profile.password')),
-            'icon' => lucide_icon('shield-alert', $active),
-        ],
-    ];
-@endphp
-
-<aside class="flex overflow-x-auto mt-10 lg:block lg:w-64 lg:flex-none">
-    <nav class="flex-none bg-white p-4 rounded-xl shadow-xs border border-gray-200">
-        <ul role="list" class="flex gap-x-3 gap-y-1 whitespace-nowrap lg:flex-col">
-            @foreach ($navigation as $item)
+<aside class="md:col-span-3">
+    <div class="card card-border shadow-none">
+        <nav class="card-body p-2">
+            <ul role="list" class="menu p-0">
                 <li>
-                    <a href="{{ $item['route'] }}"
-                        class="group flex gap-x-3 rounded-md py-2 pr-3 pl-2 text-sm/6 font-semibold @if ($item['active']) text-primary-600 bg-gray-50 @else text-gray-700 @endif hover:bg-gray-50 hover:text-primary-600">
-                        {!! $item['icon'] !!}
-                        {{ $item['name'] }}
+                    <a href="{{ route('account.dashboard') }}"
+                        class="@if (request()->routeIs('account.dashboard')) menu-active @endif">
+                        <span class="icon-[tabler--home] size-5"></span>
+                        Dashboard
                     </a>
                 </li>
-            @endforeach
-
-            <li>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button href="{{ route('account.wishlist') }}"
-                        class="group flex w-full cursor-pointer gap-x-3 rounded-md py-2 pr-3 pl-2 text-sm/6 font-semibold text-red-600 hover:bg-gray-50 hover:text-red-600">
-                        <i data-lucide="power" class="size-6 shrink-0 text-red-600 group-hover:text-red-600"></i>
-                        {{ __('Logout') }}
-                    </button>
-                </form>
-            </li>
-
-        </ul>
-    </nav>
+                <li>
+                    <a href="{{ route('account.orders.index') }}"
+                        class="@if (request()->routeIs('account.orders.*')) menu-active @endif">
+                        <span class="icon-[tabler--shopping-bag] size-5"></span>
+                        Your Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('account.addresses.index') }}"
+                        class="@if (request()->routeIs('account.addresses.*')) menu-active @endif">
+                        <span class="icon-[tabler--map-pin] size-5"></span>
+                        Your Addresses
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('account.wishlist') }}"
+                        class="@if (request()->routeIs('account.wishlist')) menu-active @endif">
+                        <span class="icon-[tabler--heart] size-5"></span>
+                        Your Wishlist
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('profile.edit') }}" class="@if (request()->routeIs('profile.edit')) menu-active @endif">
+                        <span class="icon-[tabler--shield] size-5"></span>
+                        Account Details
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('profile.password') }}"
+                        class="@if (request()->routeIs('profile.password')) menu-active @endif">
+                        <span class="icon-[tabler--key] size-5"></span>
+                        Change Password
+                    </a>
+                </li>
+            </ul>
+            <div class="divider my-2"></div>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-text btn-error btn-block h-11 justify-start px-4 font-normal">
+                    <span class="icon-[tabler--logout-2] size-5"></span>
+                    {{ __('Logout') }}
+                </button>
+            </form>
+        </nav>
+    </div>
 </aside>

@@ -1,19 +1,18 @@
 <x-layouts.admin>
 
-    <div class="rounded-md bg-green-50 p-4">
+    <div class="alert alert-soft alert-success">
         <div class="flex">
             <div class="shrink-0">
-                <i data-lucide="check" class="size-5 text-green-400"></i>
+                <span class="icon-[tabler--check] text-success size-5"></span>
             </div>
             <div class="ml-3">
-                <p class="text-sm font-medium text-green-800">Successfully uploaded</p>
+                <p class="text-sm font-medium">Successfully uploaded</p>
             </div>
             <div class="ml-auto pl-3">
                 <div class="-mx-1.5 -my-1.5">
-                    <button type="button"
-                        class="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50 focus:outline-hidden">
+                    <button type="button" class="btn btn-sm btn-soft btn-success btn-square">
                         <span class="sr-only">Dismiss</span>
-                        <i data-lucide="x" class="size-5"></i>
+                        <span class="icon-[tabler--x] size-5"></span>
                     </button>
                 </div>
             </div>

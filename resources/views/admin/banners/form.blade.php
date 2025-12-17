@@ -1,5 +1,5 @@
 <x-layouts.admin>
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto space-y-6">
         @php
             $breadcrumbLinks = [
                 [
@@ -29,100 +29,72 @@
                 @method('put')
             @endisset
 
-            <div class="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
-                <div class="p-6">
+            <div class="card">
+                <div class="card-body">
                     <div class="grid md:grid-cols-2 gap-4">
 
-                        <div class="space-y-2">
-                            <label for="name" class="control-label">Name</label>
+                        <div class="space-y-1">
+                            <label for="name" class="label-text">Name</label>
                             <input type="text" name="name" id="name"
-                                class="form-control @error('name') is-invalid @enderror"
+                                class="input @error('name') is-invalid @enderror"
                                 value="{{ old('name', $banner->name) }}" />
                             @error('name')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="image" class="control-label">Image</label>
-                            <input id="image" name="image" type="file" class="form-control">
+                        <div class="space-y-1">
+                            <label for="image" class="label-text">Image</label>
+                            <input id="image" name="image" type="file" class="input">
                         </div>
 
-
-                        <div class="space-y-2">
-                            <label for="link" class="control-label">Destination Link</label>
+                        <div class="space-y-1">
+                            <label for="link" class="label-text">Destination Link</label>
                             <input type="text" name="link" id="link"
-                                class="form-control @error('link') is-invalid @enderror"
+                                class="input @error('link') is-invalid @enderror"
                                 value="{{ old('link', $banner->link) }}" />
                             @error('link')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="location" class="control-label">Location</label>
+                        <div class="space-y-1">
+                            <label for="location" class="label-text">Location</label>
                             <input type="text" name="location" id="location"
-                                class="form-control @error('location') is-invalid @enderror"
+                                class="input @error('location') is-invalid @enderror"
                                 value="{{ old('location', $banner->location ?? 'slider') }}" list="locationOption" />
                             <datalist id="locationOption">
                                 <option value="slider">
                             </datalist>
                             @error('location')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
-                            <script>
-                                var is_new_tab = '{{ old('is_new_tab', $banner->is_new_tab) }}';
-                            </script>
-                            <div class="flex items-center" x-data="{
-                                isNewTab: is_new_tab == 1 ? true : false,
-                            }">
-                                <button type="button" :class="isNewTab ? 'bg-primary-600' : 'bg-gray-200'"
-                                    class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 focus:outline-hidden"
-                                    role="switch" :aria-checked="isNewTab" aria-labelledby="annual-billing-label"
-                                    @click="isNewTab = !isNewTab">
-                                    <span aria-hidden="true" :class="isNewTab ? 'translate-x-5' : 'translate-x-0'"
-                                        class="pointer-events-none inline-block size-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out"></span>
-                                </button>
-                                <span class="ml-3 text-sm" id="annual-billing-label">
-                                    <span class="font-medium text-gray-900">Is New Tab</span>
-                                </span>
-                                <!-- Hidden input for form submission -->
-                                <input type="hidden" name="is_new_tab" :value="isNewTab ? 1 : 0" />
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-1">
+                                <input type="hidden" name="is_new_tab" value="0" />
+                                <input type="checkbox" class="switch switch-primary" id="is_new_tab" name="is_new_tab"
+                                    value="1" @checked(old('is_new_tab', $banner->is_new_tab)) />
+                                <label class="label-text text-base" for="is_new_tab"> Open in New tab </label>
                             </div>
                         </div>
 
-                        <div class="space-y-2">
-                            <script>
-                                var is_active = '{{ old('is_active', $banner->is_active) }}';
-                            </script>
-                            <div class="flex items-center" x-data="{
-                                isActive: is_active == 1 ? true : false,
-                            }">
-                                <button type="button" :class="isActive ? 'bg-primary-600' : 'bg-gray-200'"
-                                    class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 focus:outline-hidden"
-                                    role="switch" :aria-checked="isActive" aria-labelledby="annual-billing-label"
-                                    @click="isActive = !isActive">
-                                    <span aria-hidden="true" :class="isActive ? 'translate-x-5' : 'translate-x-0'"
-                                        class="pointer-events-none inline-block size-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out"></span>
-                                </button>
-                                <span class="ml-3 text-sm" id="annual-billing-label">
-                                    <span class="font-medium text-gray-900">Is Active</span>
-                                </span>
-                                <!-- Hidden input for form submission -->
-                                <input type="hidden" name="is_active" :value="isActive ? 1 : 0" />
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-1">
+                                <input type="hidden" name="is_active" value="0" />
+                                <input type="checkbox" class="switch switch-primary" id="is_active" name="is_active"
+                                    value="1" @checked(old('is_active', $banner->is_active)) />
+                                <label class="label-text text-base" for="is_active"> Active </label>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
 
             <div class="mt-6 space-x-2">
-                <button type="submit" class="btn-primary">Submit</button>
-                <a href="{{ route('admin.banners.index') }}" class="btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ route('admin.banners.index') }}" class="btn btn-soft">Cancel</a>
             </div>
         </form>
     </div>

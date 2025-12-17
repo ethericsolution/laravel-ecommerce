@@ -1,6 +1,6 @@
 <x-layouts.admin>
 
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto space-y-6">
         @php
             $breadcrumbLinks = [
                 [
@@ -27,7 +27,7 @@
                 <div class="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
 
                     <div class="p-6 border-b border-gray-200 flex justify-between items-center w-full">
-                        <h3 class="text-base font-semibold text-gray-800">Order Detail</h3>
+                        <h3 class="text-base-content text-lg font-medium">Order Detail</h3>
 
                         <a target="_blank" href="{{ route('admin.orders.pdf', $order) }}"
                             class="btn-primary gap-2 flex item-center">
@@ -92,7 +92,7 @@
                 @if ($order->payments->count() > 0)
                     <div class="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
                         <div class="p-6 border-b border-gray-200">
-                            <h3 class="text-base font-semibold text-gray-800">Payment Log</h3>
+                            <h3 class="text-base-content text-lg font-medium">Payment Log</h3>
                         </div>
                         <div class="p-6">
                             <div class="-mx-6 -my-6 overflow-x-auto">
@@ -133,7 +133,7 @@
             <div>
                 <div class="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
                     <div class="p-6 border-b border-gray-200">
-                        <h3 class="text-base font-semibold text-gray-800">Customer Detail</h3>
+                        <h3 class="text-base-content text-lg font-medium">Customer Detail</h3>
                     </div>
 
                     <div class="p-6">

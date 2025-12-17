@@ -132,7 +132,8 @@ class OrderController extends Controller
             'sub_total' => $cart->total,
             'delivery_charge' => getDeliveryCharge(),
             'grand_total' => $cart->total + getDeliveryCharge(),
-            'notes' => $validated['notes']
+            'notes' => $validated['notes'],
+            'ip_address' => $request->ip(),
         ]);
 
         $cartItems = $cart->items->map(function ($item) {
@@ -308,7 +309,20 @@ class OrderController extends Controller
         $orders = auth()->user()->orders()->latest()->paginate(10)
             ->withQueryString();
 
-        return view('orders.index', compact('orders'));
+        $rightSideView = 'orders.index';
+
+        $pageTitle = 'Your Orders';
+
+        $breadcrumbs = [
+            'links' => [
+                ['url' => route('home'), 'text' => 'Home'],
+                ['url' => route('account.dashboard'), 'text' => 'Your Account'],
+                ['url' => '#', 'text' => $pageTitle]
+            ],
+            'title' => $pageTitle,
+        ];
+
+        return view('account.index', compact('rightSideView', 'pageTitle', 'breadcrumbs', 'orders'));
     }
 
     public function show(Order $order): View
@@ -319,6 +333,19 @@ class OrderController extends Controller
             abort(404);
         }
 
-        return view('orders.show', compact('order'));
+        $rightSideView = 'orders.show';
+
+        $pageTitle = 'Order Detail';
+
+        $breadcrumbs = [
+            'links' => [
+                ['url' => route('home'), 'text' => 'Home'],
+                ['url' => route('account.dashboard'), 'text' => 'Your Account'],
+                ['url' => '#', 'text' => $pageTitle]
+            ],
+            'title' => $pageTitle,
+        ];
+
+        return view('account.index', compact('rightSideView', 'pageTitle', 'breadcrumbs', 'order'));
     }
 }

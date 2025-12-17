@@ -6,7 +6,8 @@
         "dev": "vite"
     },
     "devDependencies": {
-        "@tailwindcss/forms": "^0.5.10",
+        "@iconify-json/tabler": "^1.2.23",
+        "@iconify/tailwind4": "^1.1.1",
         "@tailwindcss/typography": "^0.5.16",
         "@tailwindcss/vite": "^4.0.0",
         "axios": "^1.8.2",
@@ -22,7 +23,6 @@
         "@tiptap/starter-kit": "^2.11.7",
         "alpinejs": "^3.14.9",
         "build": "^0.1.4",
-        "lucide": "^0.513.0",
-        "swiper": "^11.2.8"
+        "flyonui": "^2.4.1"
     }
 }

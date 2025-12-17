@@ -17,145 +17,261 @@
     ];
 @endphp
 
-<!-- header area start -->
-<header class="sticky top-0 z-40">
-    <div class="bg-white/95 backdrop-blur-sm border-b border-accent-200/50 shadow-md">
-        <div class="container px-3 md:px-5 xl:px-0">
-            <div class="flex justify-between items-center gap-4 py-4">
-                <div class="flex-shrink-0">
-                    <a href="{{ route('home') }}" class="block">
-                        <img class="h-14" src="{{ getLogoURL() }}" alt="{{ setting('general.app_name') }}"
-                            loading="lazy" />
-                    </a>
-                </div>
-                <form action="{{ route('search.store') }}" method="POST" class="lg:max-w-80 lg:block hidden w-full">
-                    @csrf
-                    <div class="relative group">
-                        <input type="text" name="query"
-                            class="w-full h-11 pr-4 pl-12 rounded-xl border border-accent-200 bg-accent-50/30 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 focus:bg-white transition-all duration-300 placeholder:text-accent-400"
-                            placeholder="Search products...">
-
-                        <i data-lucide="search"
-                            class="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-accent-400 group-hover:text-primary-400 transition-colors duration-300"></i>
-                    </div>
-                </form>
-                <div class="lg:block hidden">
-                    <div class="flex items-center gap-x-3">
-                        <a href="{{ route('account.cart') }}"
-                            class="relative p-2 rounded-xl text-accent-700 hover:bg-accent-100 hover:text-primary-500 transition-all duration-300 group">
-                            <i data-lucide="shopping-cart" class="size-6"></i>
-                            @if (cartCount() > 0)
-                                <span
-                                    class="absolute -top-1 -right-1 bg-primary-500 text-white text-xs rounded-full px-2 py-0.5 font-medium min-w-[20px] text-center group-hover:scale-110 transition-transform duration-300">
-                                    {{ cartCount() }}
-                                </span>
-                            @endif
-                        </a>
-
-                        <a href="{{ route('account.wishlist') }}"
-                            class="p-2 rounded-xl text-accent-700 hover:bg-accent-100 hover:text-primary-500 transition-all duration-300"
+<!-- Navbar -->
+<header class="border-base-content/20 bg-base-100 py-0.25 fixed top-0 z-10 w-full border-b">
+    <nav class="navbar mx-auto max-w-7xl rounded-b-xl px-4 sm:px-6 lg:px-8">
+        <div class="w-full lg:flex lg:items-center lg:gap-2">
+            <div class="navbar-start items-center justify-between max-lg:w-full">
+                <a class="text-base-content flex items-center gap-3 text-xl font-semibold" href="{{ route('home') }}">
+                    <img src="{{ getLogoURL() }}" alt="Saptapadi Matrimonial" class="h-10 w-auto" />
+                </a>
+                <div class="flex items-center gap-5 lg:hidden">
+                    <div class="indicator">
+                        <div class="indicator-item inline-grid *:[grid-area:1/1]">
+                            <div class="status status-error"></div>
+                        </div>
+                        <a href="{{ route('account.wishlist') }}" class="btn btn-sm btn-text btn-square"
                             aria-label="Wishlist">
-                            <i data-lucide="heart" class="size-6"></i>
+                            <span class="icon-[tabler--heart] size-5"></span>
                         </a>
-
-                        @auth
-                            <a href="{{ route('account.dashboard') }}"
-                                class="p-2 rounded-xl text-accent-700 hover:bg-accent-100 hover:text-primary-500 transition-all duration-300"
-                                aria-label="Your Account">
-                                <i data-lucide="user-circle" class="size-6"></i>
-                            </a>
-                        @else
-                            <a href="{{ route('login') }}"
-                                class="btn-secondary text-sm gap-2 px-5 py-2.5 rounded-xl shadow-sm hover:shadow">
-                                <i data-lucide="user-circle" class="size-5"></i>
-                                <span>Login</span>
-                            </a>
-                        @endauth
                     </div>
-                </div>
-                <div class="lg:hidden inline-flex space-x-4">
-                    <button type="button" class="cursor-pointer text-gray-800 hover:text-primary-500"
-                        @click="openSearch=true" aria-label="Open search box">
-                        <i data-lucide="search" class="size-6"></i>
-                    </button>
 
-                    <a href="{{ route('account.cart') }}" class="relative text-gray-700" aria-label="Shopping Cart">
-                        <i data-lucide="shopping-cart" class="size-6"></i>
-                        <span class="absolute -top-2 -right-3 bg-red-400 text-white text-xs rounded-full px-1.5 py-0.5">
+                    <div class="indicator pr-1">
+                        <span
+                            class="indicator-item p-0 size-4 text-xs text-center badge badge-error rounded-full text-white">
                             {{ cartCount() }}
                         </span>
-                    </a>
 
-                    <a href="{{ route('account.wishlist') }}" class="text-gray-700" aria-label="Wishlist">
-                        <i data-lucide="heart" class="size-6"></i>
-                    </a>
-
-                    <button type="button" class="cursor-pointer text-gray-800 hover:text-primary-500"
-                        @click="showMenu=true" aria-label="Show Menu">
-                        <i data-lucide="menu" class="size-6"></i>
+                        <button type="button" class="btn btn-sm btn-text btn-square" aria-haspopup="dialog"
+                            aria-expanded="false" aria-controls="cart-drawer" data-overlay="#cart-drawer">
+                            <span class="icon-[tabler--shopping-bag] size-5"></span>
+                        </button>
+                    </div>
+                    <!-- Mobile: Just the menu button for authenticated users -->
+                    <button type="button" class="collapse-toggle btn btn-outline btn-secondary btn-square"
+                        data-collapse="#navbar-block-4" aria-controls="navbar-block-4" aria-label="Toggle navigation">
+                        <span class="icon-[tabler--menu-2] collapse-open:hidden size-5.5"></span>
+                        <span class="icon-[tabler--x] collapse-open:block size-5.5 hidden"></span>
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
-    <div
-        class="bottom-header bg-gradient-to-r from-accent-50 to-white border-b border-accent-100 shadow-md relative z-30 hidden lg:block">
-        <div class="container px-3 md:px-5 xl:px-0">
-            <div class="py-4 items-center">
-                <nav class="inline-block space-6 items-center w-full">
-                    @foreach ($links as $link)
-                        <a class="font-medium {{ request()->url() == $link['link'] ? 'text-primary-500 bg-primary-100' : 'text-accent-700' }} leading-tight hover:text-primary-500 transition-all duration-300 px-4 py-2 rounded-lg hover:bg-primary-100 text-nowrap"
-                            href="{{ $link['link'] }}">
-                            {{ $link['title'] }}
+            <div id="navbar-block-4"
+                class="lg:navbar-center transition-height collapse hidden grow overflow-hidden font-medium duration-300 lg:flex">
+                <div class="text-base-content flex gap-6 text-base max-lg:mt-4 max-lg:flex-col lg:items-center">
+                    @foreach ($links as $item)
+                        <a href="{{ $item['link'] }}" class="text-gray-600 hover:text-primary nav-link">
+                            {{ $item['title'] }}
                         </a>
                     @endforeach
-                </nav>
-            </div>
-        </div>
-    </div>
-    <div class="relative z-500" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" x-show="showMenu"
-        x-cloak>
-        <!-- Background backdrop, show/hide based on slide-over state. -->
-        <div class="fixed inset-0 bg-gray-900/80" aria-hidden="true"></div>
 
-        <div class="fixed inset-0 overflow-hidden">
-            <div class="absolute inset-0 overflow-hidden">
-                <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
-                    x-transition:enter="transform transition ease-in-out duration-500 sm:duration-700"
-                    x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
-                    x-transition:leave="transform transition ease-in-out duration-500 sm:duration-700"
-                    x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" x-show="showMenu"
-                    x-cloak>
-
-                    <div class="pointer-events-auto w-screen max-w-md">
-                        <div class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
-                            <div class="flex justify-between items-center px-3 py-4 mb-4">
-                                <a href="{{ route('home') }}">
-                                    <img src="{{ getLogoURL() }}" alt="{{ asset('otc-logo.png') }}" loading="lazy" />
-                                </a>
-
-                                <button
-                                    class="bg-white text-gray-black flex hover:text-orange-600 focus:text-orange-600 rounded-lg p-2 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:outline-hidden"
-                                    @click="showMenu = false">
-                                    <i data-lucide="x" class="size-6"></i>
-                                </button>
+                    <!-- Mobile: Profile and Logout inside drawer for authenticated users -->
+                    @auth
+                        <div class="lg:hidden border-t border-gray-200 pt-4 mt-4">
+                            <div class="flex items-center gap-3 mb-4 px-2">
+                                <div class="avatar avatar-placeholder">
+                                    <div class="bg-primary/10 text-primary w-10 rounded-full">
+                                        <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h6 class="text-base-content font-semibold">{{ Auth::user()->full_name }}</h6>
+                                    <p class="text-base-content/60 text-sm">{{ Auth::user()->email }}</p>
+                                </div>
                             </div>
+                            <a href="{{ route('profile.edit') }}"
+                                class="flex items-center gap-3 px-2 py-2 text-gray-600 hover:text-primary nav-link">
+                                <span class="icon-[tabler--user] size-5"></span>
+                                Edit Profile
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}" class="mt-2">
+                                @csrf
+                                <button type="submit"
+                                    class="flex items-center gap-3 px-2 py-2 text-red-600 hover:text-red-700 nav-link w-full text-left">
+                                    <span class="icon-[tabler--logout] size-5"></span>
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <!-- Mobile: Auth buttons for guests -->
+                        <div class="lg:hidden flex items-center gap-2">
+                            <a href="{{ route('login') }}" class="btn btn-outline btn-primary btn-sm">Login</a>
+                            <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Register</a>
+                        </div>
+                    @endauth
+                </div>
+            </div>
+            <div class="navbar-end max-lg:hidden">
+                <div class="flex items-center gap-3">
+                    <div class="indicator">
+                        <div class="indicator-item inline-grid *:[grid-area:1/1]">
+                            <div class="status status-error"></div>
+                        </div>
+                        <a href="{{ route('account.wishlist') }}" class="btn btn-sm btn-text btn-square"
+                            aria-label="Wishlist">
+                            <span class="icon-[tabler--heart] size-5"></span>
+                        </a>
+                    </div>
 
-                            <ul class="flex flex-col items-center px-3">
-                                @foreach ($links as $link)
-                                    <li class="w-full block">
-                                        <a class="block px-3 py-2 rounded-md {{ request()->url() == $link['link'] ? 'bg-primary-50 text-primary-500 font-medium' : 'text-gray-800' }} hover:text-primary-500 hover:bg-gray-50"
-                                            href="{{ $link['link'] }}">{{ $link['title'] }}</a>
-                                    </li>
-                                @endforeach
+                    <div class="indicator pr-1">
+                        <span
+                            class="indicator-item p-0 size-4 text-xs text-center badge badge-error rounded-full text-white">
+                            {{ cartCount() }}
+                        </span>
+
+                        <button type="button" class="btn btn-sm btn-text btn-square" aria-haspopup="dialog"
+                            aria-expanded="false" aria-controls="cart-drawer" data-overlay="#cart-drawer">
+                            <span class="icon-[tabler--shopping-bag] size-5"></span>
+                        </button>
+                    </div>
+
+                    @auth
+                        <!-- Desktop: User dropdown for authenticated users -->
+                        <div class="dropdown relative inline-flex [--offset:21]">
+                            <button id="desktop-profile-dropdown" type="button" class="dropdown-toggle avatar"
+                                aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                <div class="avatar avatar-placeholder">
+                                    <div class="bg-primary/10 text-primary w-10 rounded-full">
+                                        <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
+                                    </div>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu dropdown-open:opacity-100 max-w-75 hidden w-full space-y-0.5"
+                                role="menu" aria-orientation="vertical" aria-labelledby="desktop-profile-dropdown">
+                                <li class="dropdown-header pt-4.5 mb-1 gap-4 px-5 pb-3.5">
+                                    <div class="avatar avatar-placeholder">
+                                        <div class="bg-primary/10 text-primary w-10 rounded-full">
+                                            <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-base-content font-semibold">{{ Auth::user()->name }}
+                                        </h6>
+                                        <p class="text-base-content/60 text-sm">{{ Auth::user()->email }}</p>
+                                    </div>
+                                </li>
+                                <li class="mb-1">
+                                    <a class="dropdown-item px-3" href="{{ route('profile.edit') }}">
+                                        <span class="icon-[tabler--user] size-5"></span>
+                                        Edit Profile
+                                    </a>
+                                </li>
+                                <li class="dropdown-footer p-2 pt-1">
+                                    <form action="{{ route('logout') }}" method="POST" class="w-full">
+                                        @csrf
+                                        <button
+                                            class="btn btn-text btn-error btn-block h-11 justify-start px-3 font-normal">
+                                            <span class="icon-[tabler--logout] size-5"></span>
+                                            Logout
+                                        </button>
+                                    </form>
+                                </li>
                             </ul>
                         </div>
-                    </div>
+                    @else
+                        <!-- Desktop: Auth buttons for guests -->
+                        <a href="{{ route('login') }}" class="btn btn-outline btn-primary">Login</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
+                    @endauth
                 </div>
             </div>
         </div>
-    </div>
-
-    <x-common.search-product />
+    </nav>
 </header>
-<!-- header area end -->
+
+
+<form action="{{ route('account.updateCart') }}" method="POST">
+    @csrf
+    <!-- Activity Drawer Content  -->
+    <div id="cart-drawer" class="overlay overlay-open:translate-x-0 drawer drawer-end hidden sm:max-w-104"
+        role="dialog" tabindex="-1">
+        <div class="drawer-header border-base-content/20 border-b p-4">
+            <h3 class="drawer-title text-xl font-semibold">Cart</h3>
+            <button type="button" class="btn btn-text btn-square btn-sm" aria-label="Close"
+                data-overlay="#cart-drawer">
+                <span class="icon-[tabler--x] size-5"></span>
+            </button>
+        </div>
+        <div class="drawer-body">
+            <ul class="space-y-0 mb-12">
+                @foreach (cart()->items as $product)
+                    <li class="flex items-center justify-between py-4 gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="size-18 shrink-0">
+                                <a href="{{ route('products.show', $product->product) }}">
+                                    <img src="{{ $product->product?->thumbnailURL('thumb') }}"
+                                        class="rounded-box bg-contain w-full shrink-0 h-full"
+                                        alt="{{ $product->product->name }}" />
+                                </a>
+                            </div>
+                            <div class="flex flex-col justify-between gap-2">
+                                <div class="space-y-3">
+                                    <div class="text-base-content font-medium line-clamp-1">
+                                        <a
+                                            href="{{ route('products.show', $product->product) }}">{{ $product->product->name }}</a>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <div class="max-w-24" data-input-number='{ "min": 1 }'>
+                                            <div class="input input-sm items-center">
+                                                <button type="button"
+                                                    class="btn btn-primary btn-soft size-5.5 min-h-0 rounded-sm p-0"
+                                                    aria-label="Decrement button" data-input-number-decrement>
+                                                    <span class="icon-[tabler--minus] size-3.5 shrink-0"></span>
+                                                </button>
+                                                <input class="text-center" type="number"
+                                                    value="{{ $product->quantity }}"
+                                                    name="quantity[{{ $product->product_id }}]"
+                                                    aria-label="Mini stacked buttons" data-input-number-input
+                                                    id="number-input-mini" readonly />
+                                                <button type="button"
+                                                    class="btn btn-primary btn-soft size-5.5 min-h-0 rounded-sm p-0"
+                                                    aria-label="Increment button" data-input-number-increment>
+                                                    <span class="icon-[tabler--plus] size-3.5 shrink-0"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end gap-3">
+                            <div class="text-base-content text-lg font-medium whitespace-nowrap">@money($product->total)
+                            </div>
+                            <a href="{{ route('account.removeFromCart', $product->product_id) }}"
+                                class="btn btn-square btn-text btn-sm" aria-label="Delete Item">
+                                <span class="icon-[tabler--trash] size-6 shrink-0"></span>
+                            </a>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="drawer-footer flex-col">
+
+            @if (cart()->items->isNotEmpty())
+                <div class="mb-6 w-full">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-base-content/80">Sub Total</span>
+                        <span class="text-base-content font-medium whitespace-nowrap">@money(cart()->total)</span>
+                    </div>
+                    @foreach (cart()->tax_breakdown as $tax)
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-base-content/80">{{ $tax['name'] }}</span>
+                            <span class="text-base-content font-medium whitespace-nowrap">@money($tax['total_amount'])</span>
+                        </div>
+                    @endforeach
+                    <div class="divider mb-3"></div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-base-content text-lg font-semibold">Grand Total</span>
+                        <span
+                            class="text-base-content text-lg font-semibold whitespace-nowrap">@money(cart()->total + cart()->total_tax_amount)</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary mb-2 w-full">Checkout</button>
+            @endif
+            <button type="button" class="btn btn-primary btn-outline w-full" data-overlay="#cart-drawer">Continue
+                Shopping</button>
+        </div>
+    </div>
+</form>
+<!-- ---------- END HEADER ---------- -->

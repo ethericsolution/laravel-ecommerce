@@ -1,5 +1,5 @@
 <x-layouts.admin>
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto space-y-6">
         @php
             $breadcrumbLinks = [
                 [
@@ -26,58 +26,58 @@
                 @method('put')
             @endisset
 
-            <div class="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
-                <div class="p-6">
+            <div class="card">
+                <div class="card-body">
                     <div class="grid md:grid-cols-2 gap-4">
 
-                        <div class="space-y-2">
-                            <label for="first_name" class="control-label">First Name</label>
+                        <div class="space-y-1">
+                            <label for="first_name" class="label-text">First Name</label>
                             <input type="text" name="first_name" id="first_name"
-                                class="form-control @error('first_name') is-invalid @enderror"
+                                class="input @error('first_name') is-invalid @enderror"
                                 value="{{ old('first_name', $user->first_name) }}" />
                             @error('first_name')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="last_name" class="control-label">Last Name</label>
+                        <div class="space-y-1">
+                            <label for="last_name" class="label-text">Last Name</label>
                             <input type="text" name="last_name" id="last_name"
-                                class="form-control @error('last_name') is-invalid @enderror"
+                                class="input @error('last_name') is-invalid @enderror"
                                 value="{{ old('last_name', $user->last_name) }}" />
                             @error('last_name')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="email" class="control-label">Email</label>
+                        <div class="space-y-1">
+                            <label for="email" class="label-text">Email</label>
                             <input type="text" name="email" id="email"
-                                class="form-control @error('email') is-invalid @enderror"
+                                class="input @error('email') is-invalid @enderror"
                                 value="{{ old('email', $user->email) }}" />
                             @error('email')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="phone" class="control-label">Phone</label>
+                        <div class="space-y-1">
+                            <label for="phone" class="label-text">Phone</label>
                             <input type="text" name="phone" id="phone"
-                                class="form-control @error('phone') is-invalid @enderror"
+                                class="input @error('phone') is-invalid @enderror"
                                 value="{{ old('phone', $user->phone) }}" />
                             @error('phone')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
 
-                        <!---  passsword------->
-                        <div class="space-y-2">
-                            <label for="password" class="control-label">Password</label>
+                        <!---  password------->
+                        <div class="space-y-1">
+                            <label for="password" class="label-text">Password</label>
                             <input type="password" name="password" id="password"
-                                class="form-control @error('password') is-invalid @enderror" />
+                                class="input @error('password') is-invalid @enderror" />
                             @error('password')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -86,8 +86,8 @@
             </div>
 
             <div class="mt-6 space-x-2">
-                <button type="submit" class="btn-primary">Submit</button>
-                <a href="{{ route('admin.users.index') }}" class="btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ route('admin.users.index') }}" class="btn btn-soft">Cancel</a>
             </div>
         </form>
     </div>

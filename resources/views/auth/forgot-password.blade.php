@@ -9,40 +9,42 @@
     @include('components.common.breadcrumb', $breadcrumbs)
 
     <!-- Forget Password Form Start -->
-    <div class="container py-20">
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="card shadow-none border max-w-xl mx-auto">
 
-        <div class="w-full lg:w-1/2 bg-white shadow-xs rounded-xl border border-gray-200 mx-auto p-8">
-            <h2 class="text-center text-gray-800 xl:text-4xl text-xl font-bold mb-10">Forget Password</h2>
+                <div class="card-body p-8 space-y-6 text-center">
+                    <p class="text-base-content/80">
+                        Enter your email address and we'll send you a link to reset your password.
+                    </p>
 
-            <form method="POST" action="{{ route('password.email') }}" class="space-y-6">
-                @csrf
+                    <form method="POST" action="{{ route('password.email') }}" class="space-y-4">
+                        @csrf
+                        <div class="space-y-1 text-left">
+                            <label class="label-text" for="email">Email address</label>
+                            <input type="email" name="email" value="{{ old('email') }}" id="email"
+                                class="input @error('email') is-invalid @enderror" required />
+                            @error('email')
+                                <span class="helper-text text-error">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                <div class="space-y-2.5">
-                    <label for="email" class="control-label">Email</label>
-                    <input type="text" id="email" name="email" value="{{ old('email') }}" placeholder="Email"
-                        class="form-control @error('email') is-invalid @enderror" />
-                    @error('email')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                        <x-common.captcha />
+
+                        <button type="submit" class="btn btn-primary btn-gradient btn-lg w-full">
+                            Send Reset Link
+                        </button>
+                    </form>
+
+                    <p class="text-base-content/80 text-center">
+                        Remember your password?
+                        <a href="{{ route('login') }}" class="link link-animated link-primary font-normal">
+                            Back to login
+                        </a>
+                    </p>
                 </div>
-
-                <x-common.captcha />
-
-                <button type="submit" class="btn-primary w-full gap-x-2">
-                    {{ __('Email Password Reset Link') }}
-                    <i data-lucide="move-right" class="size-6"></i>
-                </button>
-
-            </form>
-
-
-            <p class="font-normal text-base leading-tight text-gray-800 mt-6 text-center">
-                <a href="{{ route('login') }}" class="text-primary-600 font-medium text-base leading-tight">
-                    {{ __('Back to login') }}</a>
-            </p>
-
+            </div>
         </div>
     </div>
-    <!-- Sign In Form End -->
 
 </x-layouts.front>

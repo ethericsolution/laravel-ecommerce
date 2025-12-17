@@ -1,5 +1,5 @@
 <x-layouts.admin>
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto space-y-6">
         @php
             $breadcrumbLinks = [
                 [
@@ -31,43 +31,42 @@
 
             <div class="mt-6 rounded-xl bg-white shadow-sm">
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-base font-semibold text-gray-800">Order Information</h3>
+                    <h3 class="text-base-content text-lg font-medium">Order Information</h3>
                 </div>
                 <div class="p-6">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                         <div class="space-y-2">
-                            <label for="order_number" class="control-label">Order #</label>
+                            <label for="order_number" class="label-text">Order #</label>
                             <input type="text" name="order_number" id="order_number"
-                                class="form-control @error('order_number') is-invalid @enderror"
+                                class="input @error('order_number') is-invalid @enderror"
                                 value="{{ old('order_number', $order->order_number ?? $order->generateOrderNumber()) }}"
                                 readonly />
                             @error('order_number')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="space-y-2">
-                            <label for="order_date" class="control-label">Order Date</label>
+                            <label for="order_date" class="label-text">Order Date</label>
                             <input type="date" name="order_date" id="order_date"
-                                class="form-control @error('order_date') is-invalid @enderror"
+                                class="input @error('order_date') is-invalid @enderror"
                                 value="{{ old('order_date', $order->order_date?->format('Y-m-d') ?? now()->format('Y-m-d')) }}" />
                             @error('order_date')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="space-y-2">
-                            <label for="user_name" class="control-label">User</label>
+                            <label for="user_name" class="label-text">User</label>
                             @include('admin.orders.user-combobox')
                             @error('user_id')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="space-y-2">
-                            <label for="status" class="control-label">Status</label>
-                            <select name="status" id="status"
-                                class="form-select @error('status') is-invalid @enderror">
+                            <label for="status" class="label-text">Status</label>
+                            <select name="status" id="status" class="select @error('status') is-invalid @enderror">
                                 <option value="">Select Status</option>
                                 @foreach (\App\Enums\OrderStatus::cases() as $status)
                                     <option value="{{ $status->value }}" @selected(old('status', $order->status->value ?? 'new') == $status->value)>
@@ -76,7 +75,7 @@
                                 @endforeach
                             </select>
                             @error('status')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
@@ -87,7 +86,7 @@
 
             <div class="mt-6 rounded-xl bg-white shadow-sm">
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-base font-semibold text-gray-800">Order Items</h3>
+                    <h3 class="text-base-content text-lg font-medium">Order Items</h3>
                 </div>
                 <div class="p-6">
                     <div class="-mx-6 -my-6 ">
@@ -119,25 +118,25 @@
                                             </td>
                                             <td>
                                                 <input type="number" name="quantity" id="quantity"
-                                                    class="form-control @error('quantity') is-invalid @enderror"
+                                                    class="input @error('quantity') is-invalid @enderror"
                                                     :name="'items[' + index + '][quantity]'" x-model="item.quantity"
                                                     @input="updateTotal(index)" />
                                             </td>
                                             <td>
                                                 <input type="number" name="price" id="price"
-                                                    class="form-control @error('price') is-invalid @enderror"
+                                                    class="input @error('price') is-invalid @enderror"
                                                     :name="'items[' + index + '][price]'" x-model="item.price"
                                                     @input="updateTotal(index)" step="any" />
                                             </td>
                                             <td>
                                                 <input type="number" name="total" id="total"
-                                                    class="form-control @error('total') is-invalid @enderror"
+                                                    class="input @error('total') is-invalid @enderror"
                                                     :name="'items[' + index + '][total]'" x-model="item.total"
                                                     readonly />
                                             </td>
                                             <td>
                                                 <select :name="'items[' + index + '][tax_rate]'" x-model="item.tax_rate"
-                                                    class="form-select"
+                                                    class="select"
                                                     @change="updateTotal(index); calculateTaxBreakdown();">
                                                     <option value="0">No Tax</option>
                                                     <option value="5">5%</option>
@@ -173,51 +172,51 @@
 
             <div class="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-base font-semibold text-gray-800">Order Summary</h3>
+                    <h3 class="text-base-content text-lg font-medium">Order Summary</h3>
                 </div>
                 <div class="p-6">
                     <div class="grid md:grid-cols-4 gap-4">
                         <div class="space-y-2">
-                            <label for="sub_total" class="control-label">Sub Total</label>
+                            <label for="sub_total" class="label-text">Sub Total</label>
                             <input type="text" name="sub_total" id="sub_total"
-                                class="form-control @error('sub_total') is-invalid @enderror"
-                                :value="subTotal.toFixed(2)" readonly />
+                                class="input @error('sub_total') is-invalid @enderror" :value="subTotal.toFixed(2)"
+                                readonly />
                             @error('sub_total')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="space-y-2">
-                            <label for="delivery_charge" class="control-label">Delivery Charge</label>
+                            <label for="delivery_charge" class="label-text">Delivery Charge</label>
                             <input type="text" name="delivery_charge" id="delivery_charge"
-                                class="form-control @error('delivery_charge') is-invalid @enderror"
+                                class="input @error('delivery_charge') is-invalid @enderror"
                                 x-model="deliveryCharge" />
                             @error('delivery_charge')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="space-y-2">
-                            <label for="tax_amount" class="control-label">Tax Amount</label>
-                            <input type="text" name="tax_amount" id="tax_amount" class="form-control"
+                            <label for="tax_amount" class="label-text">Tax Amount</label>
+                            <input type="text" name="tax_amount" id="tax_amount" class="input"
                                 :value="taxAmount.toFixed(2)" readonly />
                         </div>
 
                         <div class="space-y-2">
-                            <label for="grand_total" class="control-label">Grand Total</label>
+                            <label for="grand_total" class="label-text">Grand Total</label>
                             <input type="text" name="grand_total" id="grand_total"
-                                class="form-control @error('grand_total') is-invalid @enderror"
-                                :value="grandTotal.toFixed(2)" readonly />
+                                class="input @error('grand_total') is-invalid @enderror" :value="grandTotal.toFixed(2)"
+                                readonly />
                             @error('grand_total')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="space-y-2 md:col-span-4">
-                            <label for="notes" class="control-label">Notes</label>
-                            <textarea class="form-control @error('notes') is-invalid @enderror" id="notes" name="notes" rows="2">{{ old('notes', $order->notes) }}</textarea>
+                            <label for="notes" class="label-text">Notes</label>
+                            <textarea class="input @error('notes') is-invalid @enderror" id="notes" name="notes" rows="2">{{ old('notes', $order->notes) }}</textarea>
                             @error('notes')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
@@ -227,7 +226,7 @@
             <!-- Tax Breakdown Section -->
             <div class="mt-6 overflow-hidden rounded-xl bg-white shadow-sm" x-show="taxBreakdown.length > 0">
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-base font-semibold text-gray-800">Tax Breakdown</h3>
+                    <h3 class="text-base-content text-lg font-medium">Tax Breakdown</h3>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
@@ -270,8 +269,8 @@
             </div>
 
             <div class="mt-6 space-x-2">
-                <button type="submit" class="btn-primary">Submit</button>
-                <a href="{{ route('admin.orders.index') }}" class="btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ route('admin.orders.index') }}" class="btn btn-soft">Cancel</a>
             </div>
         </form>
     </div>

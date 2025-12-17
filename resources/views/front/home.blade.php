@@ -8,235 +8,221 @@
 
     @if ($sliders->isNotEmpty())
         <!-- banner section start -->
-        <section class="container px-3 md:px-5 xl:px-0 mt-8 mb-16">
-            <div class="swiper bannerSwiper relative z-10">
-                <div class="swiper-wrapper">
-                    @foreach ($sliders as $slider)
-                        <div class="swiper-slide">
-
-                            @if ($slider->link)
-                                <a href="{{ $slider->link }}" @if ($slider->is_new_tab) target="_bank" @endif
-                                    aria-label="{{ $slider->name }}">
-                            @endif
-                            <img class="w-full object-cover rounded-xl"
-                                src="{{ $slider?->getMedia($slider->location)->first()?->getUrl() }}"
-                                alt="{{ $slider->name }}" loading="lazy" />
-                            @if ($slider->link)
-                                </a>
-                            @endif
+        <div class="bg-base-100 py-4">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div id="image" data-carousel='{ "loadingClasses": "opacity-0", "isInfiniteLoop": true }'
+                    class="relative w-full">
+                    <div class="carousel">
+                        <div class="carousel-body h-full opacity-0">
+                            @foreach ($sliders as $slider)
+                                <div class="carousel-slide">
+                                    <div class="flex h-full justify-center">
+                                        <img src="{{ $slider?->getMedia($slider->location)->first()?->getUrl() }}"
+                                            class="size-full object-cover" alt="{{ $slider->name }}" />
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
-                </div>
-                <div class="absolute top-1/2 items-center gap-8 w-full px-3 flex justify-between">
-                    <button
-                        class="banner-prev cursor-pointer group !p-2 flex justify-center items-center border border-solid border-primary-600 !w-12 !h-12 transition-all duration-500 rounded-full !top-2/4 !-translate-y-8 !left-5 hover:bg-primary-600 z-100">
-                        <i data-lucide="chevron-left" class="size-5 text-primary-600 group-hover:text-white"></i>
+                    </div>
+                    <!-- Previous Slide -->
+                    <button type="button"
+                        class="carousel-prev start-5 max-sm:start-3 carousel-disabled:opacity-50 size-9.5 bg-base-100 flex items-center justify-center rounded-full shadow-base-300/20 shadow-sm">
+                        <span class="icon-[tabler--chevron-left] size-5 cursor-pointer"></span>
+                        <span class="sr-only">Previous</span>
                     </button>
-                    <button
-                        class="banner-next cursor-pointer group !p-2 flex justify-center items-center border border-solid border-primary-600 !w-12 !h-12 transition-all duration-500 rounded-full !top-2/4 !-translate-y-8 !right-5 hover:bg-primary-600 z-100">
-                        <i data-lucide="chevron-right" class="size-5 text-primary-600 group-hover:text-white"></i>
+                    <!-- Next Slide -->
+                    <button type="button"
+                        class="carousel-next end-5 max-sm:end-3 carousel-disabled:opacity-50 size-9.5 bg-base-100 flex items-center justify-center rounded-full shadow-base-300/20 shadow-sm">
+                        <span class="icon-[tabler--chevron-right] size-5"></span>
+                        <span class="sr-only">Next</span>
                     </button>
                 </div>
-                <div class="banner-pagination absolute -bottom-3 flex justify-center z-20"></div>
             </div>
-        </section>
+        </div>
         <!-- banner section end -->
     @endif
 
     @if ($brands->count() > 0)
         <!-- Brand showcase section start -->
-        <section class="py-8 bg-accent-50 border-y border-accent-100">
-            <div class="container px-3 md:px-5 xl:px-0">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                    <div>
-                        <h2 class="text-accent-900 text-3xl md:text-4xl xl:text-5xl font-bold mb-1">
-                            Shop By <span class="text-gradient">Brands</span>
-                        </h2>
-                        <p class="text-accent-600 text-lg">Premium quality from trusted partners</p>
-                    </div>
-                    <div class="flex gap-3">
-                        <button class="brandSwiper-button-prev slider-nav p-2">
-                            <i data-lucide="chevron-left" class="size-4"></i>
+        <div class="bg-base-200 py-6 sm:py-10 lg:py-14">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+                data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "lg": 6 }, "isInfiniteLoop": true }'>
+
+                <div
+                    class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Popular Brands
+                    </h2>
+                    <div class="flex gap-4">
+                        <button
+                            class="btn btn-square btn-sm carousel-prev btn-primary carousel-disabled:opacity-100 carousel-disabled:btn-outline relative hover:text-white">
+                            <span class="icon-[tabler--arrow-left] size-5"></span>
                         </button>
-                        <button class="brandSwiper-button-next slider-nav p-2">
-                            <i data-lucide="chevron-right" class="size-4"></i>
+                        <button
+                            class="btn btn-square btn-sm carousel-next btn-primary carousel-disabled:opacity-100 carousel-disabled:btn-outline relative hover:text-white">
+                            <span class="icon-[tabler--arrow-right] size-5"></span>
                         </button>
                     </div>
                 </div>
 
-                <div class="swiper brandSwiper overflow-hidden py-2">
-                    <div class="swiper-wrapper items-center">
-                        @foreach ($brands as $brand)
-                            <div class="swiper-slide">
-                                <a href="{{ route('products.byBrand', $brand) }}" class="block">
-                                    <div
-                                        class="bg-white border border-accent-100 rounded-lg p-3  hover:border-primary-200 hover:shadow-sm transition-all duration-300 text-center">
-                                        <img class="aspect-square size-32 object-contain inline-flex justify-center"
-                                            src="{{ $brand->thumbnailURL('thumb') }}" alt="{{ $brand->name }}"
-                                            loading="lazy" />
+                <div id="multi-slide" class="relative w-full">
+                    <div class="carousel">
+                        <div class="carousel-body h-full opacity-0 gap-6">
+                            @foreach ($brands as $brand)
+                                <div class="carousel-slide h-full">
+                                    <a href="{{ route('products.byBrand', $brand) }}" class="block space-y-4">
+                                        <figure class="aspect-square flex items-center justify-center">
+                                            <img src="{{ $brand->thumbnailURL('thumb') }}" alt="{{ $brand->name }}"
+                                                loading="lazy" class="rounded-full" />
+                                        </figure>
+                                        <p class="text-center">{{ $brand->name }}</p>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Brand showcase section end -->
+    @endif
 
-                                        <p>{{ $brand->name }}</p>
+    <!-- feature products section start -->
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Product Header -->
+            <div class="mb-6 space-y-4 md:mb-8 lg:mb-10">
+                <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Featured Products</h2>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                @each('components.products.card', $featuredProducts, 'product')
+            </div>
+        </div>
+    </div>
+    <!-- feature products section end -->
+
+    <!-- top categories product section start -->
+    <div class="bg-base-200 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Header section -->
+            <div class="mb-6 space-y-4 text-center sm:mb-8 lg:mb-10">
+                <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Popular Categories</h2>
+            </div>
+
+            <!-- Categories Grid -->
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                @each('components.common.category-card', $topCategories, 'category')
+            </div>
+        </div>
+    </div>
+    <!-- top categories product section end -->
+
+
+    <!-- Our Product section start  -->
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Product Header -->
+            <div class="mb-6 space-y-4 md:mb-8 lg:mb-10">
+                <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Our Products</h2>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                @each('components.products.card', $latestProducts, 'product')
+            </div>
+        </div>
+    </div>
+    <!-- Our Product section end  -->
+
+    <!-- Testimonials section start -->
+    <div class="bg-base-200 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div id="multi-slide" data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "md": 2 } }'
+                class="relative flex w-full gap-12 max-lg:flex-col md:gap-16 lg:items-center lg:gap-24">
+                <div>
+                    <div class="space-y-4">
+                        <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Customers Feedback
+                        </h2>
+                        <p class="text-base-content/80 text-xl">Real stories from our satisfied customers</p>
+                        <div class="flex gap-4">
+                            <button
+                                class="btn btn-square btn-sm carousel-prev btn-primary carousel-disabled:opacity-100 carousel-disabled:btn-outline relative hover:text-white"
+                                disabled="disabled">
+                                <span class="icon-[tabler--arrow-left] size-5"></span>
+                            </button>
+                            <button
+                                class="btn btn-square btn-sm carousel-next btn-primary carousel-disabled:opacity-100 carousel-disabled:btn-outline relative hover:text-white">
+                                <span class="icon-[tabler--arrow-right] size-5"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel rounded-box">
+                    <div class="carousel-body gap-6 opacity-0">
+                        @foreach (config('testimonials') as $review)
+                            <div class="carousel-slide">
+                                <div
+                                    class="card card-border hover:border-primary transition-border h-full shadow-none duration-300">
+                                    <!-- Star Rating -->
+                                    <div class="card-body gap-5">
+                                        <h5 class="card-title text-xl">{{ $review['name'] }}</h5>
+                                        <div class="flex gap-1">
+                                            <span
+                                                class="icon-[tabler--star-filled] text-warning size-5 shrink-0"></span>
+                                            <span
+                                                class="icon-[tabler--star-filled] text-warning size-5 shrink-0"></span>
+                                            <span
+                                                class="icon-[tabler--star-filled] text-warning size-5 shrink-0"></span>
+                                            <span
+                                                class="icon-[tabler--star-filled] text-warning size-5 shrink-0"></span>
+                                            <span
+                                                class="icon-[tabler--star-filled] text-warning size-5 shrink-0"></span>
+                                        </div>
+                                        <!-- Content -->
+                                        <p class="text-base-content/80">{{ $review['review'] }}</p>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- Brand showcase section end -->
-    @endif
-
-    <!-- feature products section start -->
-    <section class="section-padding">
-        <div class="container px-3 md:px-5 xl:px-0">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-4">
-                <div>
-                    <h2 class="text-accent-900 text-3xl md:text-4xl xl:text-5xl font-bold mb-3">
-                        Featured <span class="text-gradient">Products</span>
-                    </h2>
-                    <p class="text-accent-600 text-lg">Handpicked favorites just for you</p>
-                </div>
-                <a href="{{ route('products.index') }}" class="btn-secondary text-sm gap-2">
-                    <span>View All</span>
-                    <i data-lucide="arrow-right" class="size-4"></i>
-                </a>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                @each('components.products.card', $featuredProducts, 'product')
-            </div>
         </div>
-    </section>
-    <!-- feature products section end -->
-
-    <!-- top categories product section start -->
-    <section class="section-padding bg-gradient-to-br from-primary-50 to-accent-50 relative overflow-hidden">
-        <!-- Background decoration -->
-        <div
-            class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-primary-100/50 to-transparent rounded-full -translate-y-48 translate-x-48">
-        </div>
-        <div
-            class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent-100/50 to-transparent rounded-full translate-y-48 -translate-x-48">
-        </div>
-
-        <div class="container px-3 md:px-5 xl:px-0 relative z-10">
-            <div class="text-center mb-16">
-                <h2 class="text-accent-900 text-3xl md:text-4xl xl:text-5xl font-bold mb-4">
-                    Our Top <span class="text-gradient">Categories</span>
-                </h2>
-                <p class="text-accent-600 text-lg max-w-2xl mx-auto">
-                    Explore our carefully curated product categories
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                @each('components.common.category-card', $topCategories, 'category')
-            </div>
-        </div>
-    </section>
-    <!-- top categories product section end -->
-
-
-    <!-- Our Product section start  -->
-    <section class="section-padding">
-        <div class="container px-3 md:px-5 xl:px-0">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-4">
-                <div>
-                    <h2 class="text-accent-900 text-3xl md:text-4xl xl:text-5xl font-bold mb-3">
-                        Our <span class="text-gradient">Products</span>
-                    </h2>
-                    <p class="text-accent-600 text-lg">Quality products for every need</p>
-                </div>
-                <a href="{{ route('products.index') }}" class="btn-secondary text-sm gap-2">
-                    <span>View All</span>
-                    <i data-lucide="arrow-right" class="size-4"></i>
-                </a>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                @each('components.products.card', $latestProducts, 'product')
-            </div>
-        </div>
-    </section>
-    <!-- Our Product section end  -->
-
-    <!-- Testimonials section start -->
-    <section class="section-padding bg-gradient-to-br from-accent-50 to-primary-50 relative overflow-hidden">
-        <!-- Background pattern -->
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-10 left-10 w-32 h-32 border border-primary-200 rounded-full"></div>
-            <div class="absolute top-32 right-20 w-24 h-24 border border-primary-200 rounded-full"></div>
-            <div class="absolute bottom-20 left-1/4 w-16 h-16 border border-primary-200 rounded-full"></div>
-        </div>
-
-        <div class="container px-3 md:px-5 xl:px-0 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
-                <div>
-                    <h2 class="text-accent-900 text-3xl md:text-4xl xl:text-5xl font-bold mb-4">
-                        What Our <span class="text-gradient">Clients</span> Say
-                    </h2>
-                    <p class="text-accent-600 text-lg max-w-2xl">
-                        Real stories from our satisfied customers
-                    </p>
-                </div>
-                <div class="flex gap-4">
-                    <button class="testimonials-button-prev slider-nav">
-                        <i data-lucide="chevron-left" class="size-5"></i>
-                    </button>
-                    <button class="testimonials-button-next slider-nav">
-                        <i data-lucide="chevron-right" class="size-5"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="swiper testimonialSwiper overflow-hidden">
-                <div class="swiper-wrapper">
-                    @foreach (config('testimonials') as $review)
-                        <div class="swiper-slide">
-                            <x-common.testimonial-card :review=$review />
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
     <!-- Testimonials section end -->
 
     <!-- recent products section start -->
-    <section class="section-padding">
-        <div class="container px-3 md:px-5 xl:px-0">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
-                <div>
-                    <h2 class="text-accent-900 text-3xl md:text-4xl xl:text-5xl font-bold mb-3">
-                        Recently <span class="text-gradient">Added</span>
-                    </h2>
-                    <p class="text-accent-600 text-lg">Fresh arrivals you don't want to miss</p>
-                </div>
+    <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+            data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "lg": 4 }, "isInfiniteLoop": true }'>
+            <div
+                class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+                <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Recently Added
+                </h2>
                 <div class="flex gap-4">
-                    <button class="recentSwiper-button-prev slider-nav">
-                        <i data-lucide="chevron-left" class="size-5"></i>
+                    <button
+                        class="btn btn-square btn-sm carousel-prev btn-primary carousel-disabled:opacity-100 carousel-disabled:btn-outline relative hover:text-white">
+                        <span class="icon-[tabler--arrow-left] size-5"></span>
                     </button>
-                    <button class="recentSwiper-button-next slider-nav">
-                        <i data-lucide="chevron-right" class="size-5"></i>
+                    <button
+                        class="btn btn-square btn-sm carousel-next btn-primary carousel-disabled:opacity-100 carousel-disabled:btn-outline relative hover:text-white">
+                        <span class="icon-[tabler--arrow-right] size-5"></span>
                     </button>
                 </div>
             </div>
-            <div class="swiper recentSwiper overflow-hidden">
-                <div class="swiper-wrapper">
-                    @foreach ($bestSellingProducts as $product)
-                        <div class="swiper-slide">
-                            <x-products.card :product="$product" />
-                        </div>
-                    @endforeach
+
+            <div class="relative w-full">
+                <div class="carousel">
+                    <div class="carousel-body h-full opacity-0 gap-6">
+                        @foreach ($bestSellingProducts as $product)
+                            <div class="carousel-slide h-full">
+                                <x-products.card :product="$product" />
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
     <!-- recent products section end -->
-
-    @push('scripts')
-        @vite('resources/js/home.js')
-    @endpush
 
 </x-layouts.front>
