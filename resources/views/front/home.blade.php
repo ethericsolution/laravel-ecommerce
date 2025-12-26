@@ -46,7 +46,7 @@
         <!-- Brand showcase section start -->
         <div class="bg-base-200 py-6 sm:py-10 lg:py-14">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-                data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "lg": 6 }, "isInfiniteLoop": true }'>
+                data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 2, "md": 3, "lg": 6 }, "isInfiniteLoop": true }'>
 
                 <div
                     class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
