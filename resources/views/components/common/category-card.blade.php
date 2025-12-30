@@ -8,7 +8,7 @@
         <a href="{{ route('products.byCategory', $category) }}">
             <h3 class="mb-1 text-2xl font-bold text-white">{{ $category->name }}</h3>
         </a>
-        <p class="mb-6 text-white">{{ $category->products_count }} Products</p>
+        {{-- <p class="mb-6 text-white">{{ $category->products_count }} Products</p> --}}
         <a href="{{ route('products.byCategory', $category) }}" class="btn btn-success btn-sm">Shop Now</a>
     </div>
 </div>
