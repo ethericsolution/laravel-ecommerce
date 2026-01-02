@@ -49,14 +49,14 @@
 
 <body class="bg-base-100">
     <x-admin.alert />
-    <div class="bg-base-100">
+    <div class="bg-base-100 flex-col">
         <x-front.header />
 
-        <main class="pt-16">
+        <main class="flex-1">
             {{ $slot }}
+            <x-front.footer />
         </main>
 
-        <x-front.footer />
     </div>
 
     <!-- script file here -->
