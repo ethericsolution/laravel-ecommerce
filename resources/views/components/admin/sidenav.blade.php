@@ -131,7 +131,7 @@
 <aside id="layout-toggle"
     class="overlay overlay-open:translate-x-0 drawer drawer-start inset-y-0 start-0 hidden h-full [--auto-close:lg] sm:w-75 lg:z-50 lg:block lg:translate-x-0 lg:shadow-none"
     aria-label="Sidebar" tabindex="-1">
-    <div class="drawer-head border-base-content/20 border-e px-6 py-2">
+    <div class="drawer-head border-base-content/20 border-e px-6 py-2 h-16">
         <div class="flex flex-1 items-center justify-between">
             <a class="link text-base-content link-neutral text-xl font-semibold no-underline"
                 href="{{ route('admin.dashboard') }}">
@@ -144,8 +144,8 @@
             </button>
         </div>
     </div>
-    <div class="drawer-body border-base-content/20 h-full border-e p-6">
-        <ul class="menu p-0">
+    <div class="drawer-body border-base-content/20 h-[calc(100vh-4rem)] border-e p-4">
+        <ul class="menu menu-sm p-0">
             @foreach ($navigation as $item)
                 @if (isset($item['group']))
                     <li

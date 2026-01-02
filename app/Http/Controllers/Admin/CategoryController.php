@@ -16,12 +16,12 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::latest()
-            ->withCount('products')
-            ->search(request('query'))
+            ->withCount("products")
+            ->search(request("query"))
             ->paginate()
             ->withQueryString();
 
-        return view('admin.categories.index', compact('categories'));
+        return view("admin.categories.index", compact("categories"));
     }
 
     /**
@@ -31,7 +31,9 @@ class CategoryController extends Controller
     {
         $category = new Category();
 
-        return view('admin.categories.form', compact('category'));
+        $categories = Category::active()->pluck("name", "id");
+
+        return view("admin.categories.form", compact("category", "categories"));
     }
 
     /**
@@ -39,26 +41,18 @@ class CategoryController extends Controller
      */
     public function store(CategoryStoreRequest $request)
     {
-
         $category = Category::create($request->validated());
 
-        if ($request->hasFile('featured-image')) {
-            $category->addMediaFromRequest('featured-image')
+        if ($request->hasFile("featured-image")) {
+            $category
+                ->addMediaFromRequest("featured-image")
                 ->preservingOriginal()
                 ->toMediaCollection();
         }
 
         return redirect()
-            ->route('admin.categories.index')
-            ->with('success', 'Category created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        //
+            ->route("admin.categories.index")
+            ->with("success", "Category created successfully.");
     }
 
     /**
@@ -66,7 +60,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.categories.form', compact('category'));
+        $categories = Category::active()->pluck("name", "id");
+
+        return view("admin.categories.form", compact("category", "categories"));
     }
 
     /**
@@ -74,21 +70,20 @@ class CategoryController extends Controller
      */
     public function update(CategoryUpdateRequest $request, Category $category)
     {
-
         $category->fill($request->validated());
         $category->save();
 
-        if ($request->hasFile('featured-image')) {
-
+        if ($request->hasFile("featured-image")) {
             $category->clearMediaCollection();
-            $category->addMediaFromRequest('featured-image')
+            $category
+                ->addMediaFromRequest("featured-image")
                 ->preservingOriginal()
                 ->toMediaCollection();
         }
 
         return redirect()
-            ->route('admin.categories.index')
-            ->with('success', 'Category updated successfully.');
+            ->route("admin.categories.index")
+            ->with("success", "Category updated successfully.");
     }
 
     /**
@@ -101,18 +96,17 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()
-            ->route('admin.categories.index')
-            ->with('success', 'Category deleted successfully.');
+            ->route("admin.categories.index")
+            ->with("success", "Category deleted successfully.");
     }
-
 
     /**
      * Search Category by name
      */
     public function search(Request $request)
     {
-        $categories = Category::where('name', 'like', '%' . $request->q . '%')
-            ->select(['id', 'name'])
+        $categories = Category::where("name", "like", "%" . $request->q . "%")
+            ->select(["id", "name"])
             ->latest()
             ->take(10)
             ->get();

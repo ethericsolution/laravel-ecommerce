@@ -27,6 +27,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
+                            <th scope="col">Parent Category</th>
                             <th scope="col">Slug</th>
                             <th scope="col" class="text-center">Products</th>
                             <th scope="col" class="relative">
@@ -38,6 +39,15 @@
                         @forelse ($categories as $category)
                             <tr>
                                 <td class="font-semibold">{{ $category->name }}</td>
+                                <td>
+                                    @if ($category->parent)
+                                        <span class="inline-flex items-center gap-1">
+                                            {{ $category->parent->name }}
+                                        </span>
+                                    @else
+                                        <span class="text-gray-400">—</span>
+                                    @endif
+                                </td>
                                 <td>{{ $category->slug }}</td>
                                 <td class="text-center">{{ $category->products_count }}</td>
 
@@ -49,7 +59,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center">No Records found</td>
+                                <td colspan="5" class="text-center">No Records found</td>
                             </tr>
                         @endforelse
                     </tbody>

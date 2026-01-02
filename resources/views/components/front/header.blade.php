@@ -1,6 +1,6 @@
 @php
 
-    $categories = App\Models\Category::take(6)->get(['id', 'slug', 'name']);
+    $categories = App\Models\Category::take(4)->get(['id', 'slug', 'name']);
 
     $categoryLink = [];
 
@@ -8,176 +8,122 @@
         array_push($categoryLink, ['link' => route('products.byCategory', $category), 'title' => $category->name]);
     }
 
-    $links = [
-        // ['link' => route('home'), 'title' => 'Home'],
-        // ['link' => route('about'), 'title' => 'About Us'],
-        ...$categoryLink,
-        // ['link' => route('whiteLabel'), 'title' => 'White Labelling'],
-        // ['link' => route('contact'), 'title' => 'Contact Us'],
-    ];
+    $links = [...$categoryLink];
 @endphp
 
 <!-- Navbar -->
-<header class="border-base-content/20 bg-base-100 py-0.25 fixed top-0 z-10 w-full border-b">
-    <nav class="navbar mx-auto max-w-7xl rounded-b-xl px-4 sm:px-6 lg:px-8">
-        <div class="w-full lg:flex lg:items-center lg:gap-2">
-            <div class="navbar-start items-center justify-between max-lg:w-full">
-                <a class="text-base-content flex items-center gap-3 text-xl font-semibold" href="{{ route('home') }}">
-                    <img src="{{ getLogoURL() }}" alt="Saptapadi Matrimonial" class="h-10 w-auto" />
+<div class="bg-base-100 lg:shadow-base-300/20 lg:shadow-sm sticky top-0 z-10">
+    <div class="border-b border-base-content/20 py-px">
+        <nav class="navbar mx-auto max-w-7xl gap-4">
+            <div class="navbar-start items-center">
+                <!-- Mobile: Just the menu button for authenticated users -->
+                <button type="button" class="collapse-toggle btn btn-outline btn-secondary btn-square lg:hidden"
+                    data-collapse="#navbar-block-4" aria-controls="navbar-block-4" aria-label="Toggle navigation">
+                    <span class="icon-[tabler--menu-2] collapse-open:hidden size-5.5"></span>
+                    <span class="icon-[tabler--x] collapse-open:block size-5.5 hidden"></span>
+                </button>
+                <a href="{{ route('home') }}">
+                    <img src="{{ getLogoURL() }}" alt="{{ config('app.name') }}" class="h-10 w-auto" />
                 </a>
-                <div class="flex items-center gap-5 lg:hidden">
-                    <div class="indicator">
-                        <div class="indicator-item inline-grid *:[grid-area:1/1]">
-                            <div class="status status-error"></div>
-                        </div>
-                        <a href="{{ route('account.wishlist') }}" class="btn btn-sm btn-text btn-square"
-                            aria-label="Wishlist">
-                            <span class="icon-[tabler--heart] size-5"></span>
-                        </a>
-                    </div>
+            </div>
+            <div class="navbar-center max-md:hidden">
+                <button type="button"
+                    class="rounded-field h-9.5 max-w-xl border-base-content/20 flex items-center gap-1 border px-3 max-lg:hidden"
+                    aria-haspopup="dialog" aria-expanded="false" aria-controls="product-search-modal"
+                    data-overlay="#product-search-modal">
+                    <span class="text-base-content/50 max-sm:hidden">Type to search...</span>
+                    <span class="icon-[tabler--search] text-base-content/50 ms-auto size-5"></span>
+                </button>
+            </div>
+            <div class="navbar-end flex items-center gap-4">
+                <button class="btn btn-sm btn-text btn-square size-8.5 md:hidden" aria-haspopup="dialog"
+                    aria-expanded="false" aria-controls="product-search-modal" data-overlay="#product-search-modal">
+                    <span class="icon-[tabler--search] size-5.5"></span>
+                </button>
 
-                    <div class="indicator pr-1">
-                        <span
-                            class="indicator-item p-0 size-4 text-xs text-center badge badge-error rounded-full text-white">
-                            {{ cartCount() }}
-                        </span>
-
-                        <button type="button" class="btn btn-sm btn-text btn-square" aria-haspopup="dialog"
-                            aria-expanded="false" aria-controls="cart-drawer" data-overlay="#cart-drawer">
-                            <span class="icon-[tabler--shopping-bag] size-5"></span>
-                        </button>
+                <div class="indicator">
+                    <div class="indicator-item inline-grid *:[grid-area:1/1]">
+                        <div class="status status-error"></div>
                     </div>
-                    <!-- Mobile: Just the menu button for authenticated users -->
-                    <button type="button" class="collapse-toggle btn btn-outline btn-secondary btn-square"
-                        data-collapse="#navbar-block-4" aria-controls="navbar-block-4" aria-label="Toggle navigation">
-                        <span class="icon-[tabler--menu-2] collapse-open:hidden size-5.5"></span>
-                        <span class="icon-[tabler--x] collapse-open:block size-5.5 hidden"></span>
+                    <a href="{{ route('account.wishlist') }}" class="btn btn-sm btn-text btn-square"
+                        aria-label="Wishlist">
+                        <span class="icon-[tabler--heart] size-5"></span>
+                    </a>
+                </div>
+
+                <div class="indicator pr-1">
+                    <span
+                        class="indicator-item p-0 size-4 text-xs text-center badge badge-error rounded-full text-white">
+                        {{ cartCount() }}
+                    </span>
+
+                    <button type="button" class="btn btn-sm btn-text btn-square" aria-haspopup="dialog"
+                        aria-expanded="false" aria-controls="cart-drawer" data-overlay="#cart-drawer">
+                        <span class="icon-[tabler--shopping-bag] size-5"></span>
                     </button>
                 </div>
-            </div>
-            <div id="navbar-block-4"
-                class="lg:navbar-center transition-height collapse hidden grow overflow-hidden font-medium duration-300 lg:flex">
-                <div class="text-base-content flex gap-6 text-base max-lg:mt-4 max-lg:flex-col lg:items-center">
-                    @foreach ($links as $item)
-                        <a href="{{ $item['link'] }}" class="text-gray-600 hover:text-primary nav-link">
-                            {{ $item['title'] }}
-                        </a>
-                    @endforeach
 
-                    <!-- Mobile: Profile and Logout inside drawer for authenticated users -->
-                    @auth
-                        <div class="lg:hidden border-t border-gray-200 pt-4 mt-4">
-                            <div class="flex items-center gap-3 mb-4 px-2">
+                @auth
+                    <!-- Desktop: User dropdown for authenticated users -->
+                    <div class="dropdown relative inline-flex [--offset:21]">
+                        <button id="desktop-profile-dropdown" type="button" class="dropdown-toggle avatar"
+                            aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                            <div class="avatar avatar-placeholder">
+                                <div class="bg-primary/10 text-primary w-10 rounded-full">
+                                    <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
+                                </div>
+                            </div>
+                        </button>
+                        <ul class="dropdown-menu dropdown-open:opacity-100 max-w-75 hidden w-full space-y-0.5"
+                            role="menu" aria-orientation="vertical" aria-labelledby="desktop-profile-dropdown">
+                            <li class="dropdown-header pt-4.5 mb-1 gap-4 px-5 pb-3.5">
                                 <div class="avatar avatar-placeholder">
                                     <div class="bg-primary/10 text-primary w-10 rounded-full">
                                         <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <h6 class="text-base-content font-semibold">{{ Auth::user()->full_name }}</h6>
+                                    <h6 class="text-base-content font-semibold">{{ Auth::user()->name }}
+                                    </h6>
                                     <p class="text-base-content/60 text-sm">{{ Auth::user()->email }}</p>
                                 </div>
-                            </div>
-                            <a href="{{ route('profile.edit') }}"
-                                class="flex items-center gap-3 px-2 py-2 text-gray-600 hover:text-primary nav-link">
-                                <span class="icon-[tabler--user] size-5"></span>
-                                Edit Profile
-                            </a>
-                            <form method="POST" action="{{ route('logout') }}" class="mt-2">
-                                @csrf
-                                <button type="submit"
-                                    class="flex items-center gap-3 px-2 py-2 text-red-600 hover:text-red-700 nav-link w-full text-left">
-                                    <span class="icon-[tabler--logout] size-5"></span>
-                                    Logout
-                                </button>
-                            </form>
-                        </div>
-                    @else
-                        <!-- Mobile: Auth buttons for guests -->
-                        <div class="lg:hidden flex items-center gap-2">
-                            <a href="{{ route('login') }}" class="btn btn-outline btn-primary btn-sm">Login</a>
-                            <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Register</a>
-                        </div>
-                    @endauth
-                </div>
-            </div>
-            <div class="navbar-end max-lg:hidden">
-                <div class="flex items-center gap-3">
-                    <div class="indicator">
-                        <div class="indicator-item inline-grid *:[grid-area:1/1]">
-                            <div class="status status-error"></div>
-                        </div>
-                        <a href="{{ route('account.wishlist') }}" class="btn btn-sm btn-text btn-square"
-                            aria-label="Wishlist">
-                            <span class="icon-[tabler--heart] size-5"></span>
-                        </a>
+                            </li>
+                            <li class="mb-1">
+                                <a class="dropdown-item px-3" href="{{ route('profile.edit') }}">
+                                    <span class="icon-[tabler--user] size-5"></span>
+                                    Edit Profile
+                                </a>
+                            </li>
+                            <li class="dropdown-footer p-2 pt-1">
+                                <form action="{{ route('logout') }}" method="POST" class="w-full">
+                                    @csrf
+                                    <button class="btn btn-text btn-error btn-block h-11 justify-start px-3 font-normal">
+                                        <span class="icon-[tabler--logout] size-5"></span>
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
-
-                    <div class="indicator pr-1">
-                        <span
-                            class="indicator-item p-0 size-4 text-xs text-center badge badge-error rounded-full text-white">
-                            {{ cartCount() }}
-                        </span>
-
-                        <button type="button" class="btn btn-sm btn-text btn-square" aria-haspopup="dialog"
-                            aria-expanded="false" aria-controls="cart-drawer" data-overlay="#cart-drawer">
-                            <span class="icon-[tabler--shopping-bag] size-5"></span>
-                        </button>
-                    </div>
-
-                    @auth
-                        <!-- Desktop: User dropdown for authenticated users -->
-                        <div class="dropdown relative inline-flex [--offset:21]">
-                            <button id="desktop-profile-dropdown" type="button" class="dropdown-toggle avatar"
-                                aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                                <div class="avatar avatar-placeholder">
-                                    <div class="bg-primary/10 text-primary w-10 rounded-full">
-                                        <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
-                                    </div>
-                                </div>
-                            </button>
-                            <ul class="dropdown-menu dropdown-open:opacity-100 max-w-75 hidden w-full space-y-0.5"
-                                role="menu" aria-orientation="vertical" aria-labelledby="desktop-profile-dropdown">
-                                <li class="dropdown-header pt-4.5 mb-1 gap-4 px-5 pb-3.5">
-                                    <div class="avatar avatar-placeholder">
-                                        <div class="bg-primary/10 text-primary w-10 rounded-full">
-                                            <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h6 class="text-base-content font-semibold">{{ Auth::user()->name }}
-                                        </h6>
-                                        <p class="text-base-content/60 text-sm">{{ Auth::user()->email }}</p>
-                                    </div>
-                                </li>
-                                <li class="mb-1">
-                                    <a class="dropdown-item px-3" href="{{ route('profile.edit') }}">
-                                        <span class="icon-[tabler--user] size-5"></span>
-                                        Edit Profile
-                                    </a>
-                                </li>
-                                <li class="dropdown-footer p-2 pt-1">
-                                    <form action="{{ route('logout') }}" method="POST" class="w-full">
-                                        @csrf
-                                        <button
-                                            class="btn btn-text btn-error btn-block h-11 justify-start px-3 font-normal">
-                                            <span class="icon-[tabler--logout] size-5"></span>
-                                            Logout
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    @else
-                        <!-- Desktop: Auth buttons for guests -->
-                        <a href="{{ route('login') }}" class="btn btn-outline btn-primary">Login</a>
-                        <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
-                    @endauth
-                </div>
+                @else
+                    <!-- Desktop: Auth buttons for guests -->
+                    <a href="{{ route('login') }}" class="btn btn-outline btn-primary">Login</a>
+                    <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
+                @endauth
             </div>
+        </nav>
+    </div>
+
+    <div id="navbar-block-4"
+        class="lg:navbar-center transition-height collapse hidden grow overflow-hidden font-medium duration-300 lg:flex p-6">
+        <div class="mx-auto max-w-7xl text-base-content flex gap-6 text-base max-lg:flex-col lg:items-center">
+            @foreach ($links as $item)
+                <a class="text-gray-600 hover:text-primary nav-link"
+                    href="{{ $item['link'] }}">{{ $item['title'] }}</a>
+            @endforeach
         </div>
-    </nav>
-</header>
+    </div>
+</div>
 
 
 <form action="{{ route('account.updateCart') }}" method="POST">
@@ -275,3 +221,5 @@
     </div>
 </form>
 <!-- ---------- END HEADER ---------- -->
+
+<x-common.search-product />

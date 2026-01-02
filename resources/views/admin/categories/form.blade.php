@@ -53,11 +53,21 @@
                             @enderror
                         </div>
 
-                        <div class="space-y-1 col-span-2">
-                            <label for="description" class="label-text">Description</label>
-                            <textarea class="textarea @error('description') is-invalid @enderror" id="description" name="description"
-                                rows="3">{{ old('description', $category->description) }}</textarea>
-                            @error('description')
+                        <!-- Parent Category Dropdown -->
+                        <div class="space-y-1">
+                            <label for="parent_id" class="label-text">Parent Category</label>
+                            <select name="parent_id" id="parent_id"
+                                class="select @error('parent_id') is-invalid @enderror">
+                                <option value="">Select Parent Category</option>
+                                @foreach ($categories as $key => $parentCategory)
+                                    <option value="{{ $key }}"
+                                        {{ old('parent_id', $category->parent_id) == $key ? 'selected' : '' }}
+                                        {{ $category->id == $key ? 'disabled' : '' }}>
+                                        {{ $parentCategory }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('parent_id')
                                 <span class="helper-text">{{ $message }}</span>
                             @enderror
                         </div>
@@ -66,6 +76,15 @@
                             <label for="featured-image" class="block text-sm/6 font-medium text-gray-900">Featured
                                 Image</label>
                             <input id="featured-image" name="featured-image" type="file" class="input">
+                        </div>
+
+                        <div class="space-y-1 col-span-2">
+                            <label for="description" class="label-text">Description</label>
+                            <textarea class="textarea @error('description') is-invalid @enderror" id="description" name="description"
+                                rows="3">{{ old('description', $category->description) }}</textarea>
+                            @error('description')
+                                <span class="helper-text">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>

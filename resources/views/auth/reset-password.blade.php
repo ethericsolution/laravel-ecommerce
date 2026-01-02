@@ -71,7 +71,7 @@
                     </form>
 
 
-                    <p class="font-normal text-base leading-tight text-gray-800 mt-6 text-center">
+                    <p class="font-normal text-base leading-tight text-base-content mt-6 text-center">
                         <a href="{{ route('login') }}" class="text-primary-600 font-medium text-base leading-tight">
                             {{ __('Back to login') }}</a>
                     </p>

@@ -169,7 +169,7 @@
                         </dl>
 
                         <div class="mt-5">
-                            <h3 class="text-lg/6 font-semibold text-gray-800 mb-4">Contact Info</h3>
+                            <h3 class="text-lg/6 font-semibold text-base-content mb-4">Contact Info</h3>
                             <p class="text-base/6 text-gray-700">Email : {{ $order->user->email }}</p>
                             <p class="text-base/6 text-gray-700">Mobile : {{ $order->user->phone }}</p>
                         </div>
@@ -178,7 +178,7 @@
 
                 <div class="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
                     <div class="p-6 border-b border-gray-200">
-                        <h3 class="text-lg/6 font-semibold text-gray-800 mb-4">Shipping address</h3>
+                        <h3 class="text-lg/6 font-semibold text-base-content mb-4">Shipping address</h3>
 
                         <p class="text-base/6 text-gray-700">
                             {{ $order->address?->contact_name }}<br>

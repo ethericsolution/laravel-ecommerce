@@ -18,6 +18,6 @@
             </ul>
         </div>
 
-        {{-- <h1 class="text-2xl lg:text-4xl font-semibold text-gray-800">{{ $title }}</h1> --}}
+        {{-- <h1 class="text-2xl lg:text-4xl font-semibold text-base-content">{{ $title }}</h1> --}}
     </div>
 </div>

@@ -62,7 +62,7 @@
                                 @enderror
 
                                 <div class="mt-10 border-t border-gray-200 pt-10">
-                                    <h2 class="text-2xl font-semibold text-gray-800">Payment</h2>
+                                    <h2 class="text-2xl font-semibold text-base-content">Payment</h2>
 
                                     <fieldset class="mt-4">
                                         <legend class="sr-only">Payment type</legend>
